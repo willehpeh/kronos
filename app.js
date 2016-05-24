@@ -5,16 +5,27 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var crypto = require('crypto');
+var jwt = require('jsonwebtoken');
+var multipart = require('connect-multiparty');
+var multipartMiddleware = multipart();
+var fs = require('fs-extra');
 
 var config = require('./config/config');
 
 // uncomment when db_url defined in config script
-// mongoose.connect(config.db_url);
+mongoose.connect(config.db_url);
+var Watch = require('./app/models/watch');
+var User = require('./app/models/user');
+var NewsPost = require('./app/models/newspost');
+var CalendarElement = require('./app/models/calendarelement');
+var PressPhoto = require('./app/models/pressphoto');
 
 // define Mongoose Models here
 
 //var routes = require('./routes/index');
 var api = require('./routes/api');
+var auth = require('./routes/auth');
 
 var app = express();
 
@@ -22,6 +33,7 @@ var app = express();
 //app.set('views', path.join(__dirname, 'views'));
 //app.set('view engine', 'pug');
 
+app.set('tokenKey', config.secret);
 
 //uncomment when favicon.ico placed in public folder
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -34,6 +46,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //app.use('/', routes);
 app.use('/api', api);
+app.use('/auth', auth);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -48,22 +61,14 @@ app.use(function(req, res, next) {
 // will print stacktrace
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
-    });
+      res.status(err.status || 500).send({ message: err.message });
   });
 }
 
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
-  });
+  res.status(err.status || 500).send({ message: err.status });
 });
 
 
