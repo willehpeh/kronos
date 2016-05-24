@@ -1,11 +1,30 @@
 var mongoose = require('mongoose');
 
 var watchSchema = new mongoose.Schema({
-  type: String,
-  model: String,
-  price: Number,
-  photo: String,
-  info: String
+  marque: String,
+  nom: String,
+  quantite: Number,
+  reference: String,
+  annee: String,
+  description: String,
+  categorie: String,
+  disponible: Boolean,
+  prix: String,
+  taille: String,
+  mouvement: String,
+  garantie: String,
+  limite: String,
+  etancheite: String,
+  glace: String,
+  boitier: String,
+  traitement: String,
+  cadran: String,
+  lunette: String,
+  poids: String,
+  photo_front: String,
+  photo_back: String,
+  photo_quarter: String,
+  extra_photo: String
 });
 
 module.exports = mongoose.model("Watch", watchSchema);
