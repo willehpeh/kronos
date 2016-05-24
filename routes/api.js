@@ -128,12 +128,104 @@ router.route('/contact')
       });
     });
 
+router.route('/watch')
 // ALL WATCH ::: GET
+  .get(function(req, res, next) {
+    Watch.find(function(err, data) {
+      if(err) {
+        res.status(500).send(err);
+      }
+      res.send(data);
+    });
+  })
 
-// SPECIFIC WATCH ::: GET
 // SPECIFIC WATCH ::: POST
+  .post(function(req, res) {
+    var watch = new Watch();
+
+    watch.marque = req.body.marque;
+    watch.nom = req.body.nom;
+    watch.quantite = req.body.quantite;
+    watch.reference = req.body.reference;
+    watch.annee = req.body.annee;
+    watch.description = req.body.description;
+    watch.categorie = req.body.categorie;
+    watch.disponible = req.body.disponible;
+    watch.prix = req.body.prix;
+    watch.taille = req.body.taille;
+    watch.mouvement = req.body.mouvement;
+    watch.garantie = req.body.garantie;
+    watch.limite = req.body.limite;
+    watch.etancheite = req.body.etancheite;
+    watch.glace = req.body.glace;
+    watch.boitier = req.body.boitier;
+    watch.traitement = req.body.traitement;
+    watch.cadran = req.body.cadran;
+    watch.lunette = req.body.lunette;
+    watch.poids = req.body.poids;
+
+    watch.save(function(err, watch) {
+      if(err) {
+        return res.status(500).send(err);
+      }
+      return res.send(watch);
+    });
+  });
+
+router.route('/watch/:id')
+// SPECIFIC WATCH ::: GET
+  .get(function(req, res) {
+    Watch.findById(req.params.id, function(err, watch) {
+      if(err) {
+        res.status(500).send(err);
+      }
+      res.send(watch);
+    });
+  })
 // SPECIFIC WATCH ::: PUT
+  .put(function(req, res) {
+    Watch.findById(req.params.id, function(err, watch) {
+      if(err) {
+        res.status(500).send(err);
+      }
+      watch.marque = req.body.marque;
+      watch.nom = req.body.nom;
+      watch.quantite = req.body.quantite;
+      watch.reference = req.body.reference;
+      watch.annee = req.body.annee;
+      watch.description = req.body.description;
+      watch.categorie = req.body.categorie;
+      watch.disponible = req.body.disponible;
+      watch.prix = req.body.prix;
+      watch.taille = req.body.taille;
+      watch.mouvement = req.body.mouvement;
+      watch.garantie = req.body.garantie;
+      watch.limite = req.body.limite;
+      watch.etancheite = req.body.etancheite;
+      watch.glace = req.body.glace;
+      watch.boitier = req.body.boitier;
+      watch.traitement = req.body.traitement;
+      watch.cadran = req.body.cadran;
+      watch.lunette = req.body.lunette;
+      watch.poids = req.body.poids;
+
+      watch.save(function(err, watch) {
+        if(err) {
+          return res.status(500).send(err);
+        }
+        return res.send(watch);
+      });
+    })
+  })
 // SPECIFIC WATCH ::: DELETE
+  .delete(function(req, res) {
+    Watch.remove({_id: req.params.id}, function(err) {
+      if(err) {
+        res.status(500).send(err);
+      }
+      res.status(200).send("Watch removed.");
+    });
+  });
 
 // ALL NEWSPOST ::: GET
 
