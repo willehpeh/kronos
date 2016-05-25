@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
+// Load models for MongoDB
 var Watch = require('../app/models/watch');
 var User = require('../app/models/user');
 var PressPhoto = require('../app/models/pressphoto');
@@ -8,37 +9,51 @@ var NewsPost = require('../app/models/newspost');
 var CalendarElement = require('../app/models/calendarelement');
 
 var path = require('path');
+
+// Security requirements
 var crypto = require('crypto');
 var jwt = require('jsonwebtoken');
+
+// File upload requirements
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart({uploadDir: path.join(__dirname, "../public/images/tmp")});
 var fs = require('fs-extra');
+
+// E-mail form requirement
 var nodemailer = require('nodemailer');
 
+// Config variable load
 var config = require('../config/config');
 
+// Middleware used for checking valid token and checking if admin or retailer
+// Returns token and admin true/false
 var tokenMiddleware = function(req, res, next) {
-  console.log(req.headers);
+  console.log(req.headers); // debug line
+
+  // check everywhere for token
   var token = req.body.token || req.query.token || req.headers['x-access-token'];
   if (token) {
 
-    // verifies secret and checks exp
+    // verifies secret and checks exp, checks admin/retailer
     jwt.verify(token, config.secret, function(err, decoded) {
       if (err) {
         console.log("Token invalid.");
         return res.status(401).send({errorMessage: "Token expiré."});
-      } else if (decoded.user.name == config.admin) {
+      }
+      else if (decoded.user.name == config.admin) { // checks if admin
         console.log("Admin token valid, success!");
         req.body.token = token;
         req.body.admin = true;
         next();
-      } else if (decoded.user.name == config.retailer) {
+      }
+      else if (decoded.user.name == config.retailer) { // if not admin, checks if retailer
         console.log("Retailer token valid, success!");
         req.body.token = token;
         req.body.retailer = true;
         req.body.admin = false;
         next();
-      } else {
+      }
+      else { // will only hit if token false or outdated
         console.log("Invalid user.")
         return res.status(401).send({errorMessage: "Invalid user " + JSON.stringify(decoded.user)})
       }
@@ -61,21 +76,27 @@ var tokenMiddleware = function(req, res, next) {
 
 router.route('/contact')
   .post(function(req, res) {
+
+    // get info from request
     var name = req.body.name;
     var phone = req.body.phone;
     var address = req.body.email;
     var text = req.body.text;
+
+    // initiate nodemailer service with info from config file
     var transporter = nodemailer.createTransport({
         service: 'Gmail',
         auth: {
-            user: config.via_address, // Your email id
-            pass: config.via_pw // Your password
+            user: config.via_address,
+            pass: config.via_pw
         }
     });
+
+    // build e-mail
     var mailOptions = {
-    from: address, // sender address
-    to: config.to_address, // list of receivers
-    subject: 'Nouveau message de la page Contact Kronos', // Subject line
+    from: address,
+    to: config.to_address,
+    subject: 'Nouveau message de la page Contact Kronos',
     text: 'Nom : ' + name + '\n' +
           'Téléphone : ' + phone + '\n' +
           'Email : ' + address + '\n' +
@@ -83,6 +104,7 @@ router.route('/contact')
           text
     }
 
+    // send email with nodemailer
     transporter.sendMail(mailOptions, function(error, info){
       if(error) {
         console.log(error);
@@ -102,24 +124,31 @@ router.route('/contact')
 
   router.route('/newsletter-sub')
     .post(function(req, res) {
+
+      // get info from request
       var name = req.body.name;
       var address = req.body.email;
+
+      // initiate nodemailer service with info from config file
       var transporter = nodemailer.createTransport({
           service: 'Gmail',
           auth: {
-              user: config.via_address, // Your email id
-              pass: config.via_pw // Your password
+              user: config.via_address,
+              pass: config.via_pw
           }
       });
+
+      // build e-mail
       var mailOptions = {
-      from: address, // sender address
-      to: config.to_address, // list of receivers
-      subject: 'Nouvel abonnement Newsletter Kronos', // Subject line
+      from: address,
+      to: config.to_address,
+      subject: 'Nouvel abonnement Newsletter Kronos',
       text: 'Nom : ' + name + '\n' +
             'Email : ' + address + '\n' +
             'Nouvel abonné de Newsletter'
       }
 
+      // send email with nodemailer
       transporter.sendMail(mailOptions, function(error, info){
         if(error) {
           console.log(error);
@@ -247,6 +276,144 @@ router.route('/watch/:id')
 
 // ================================================================================================
 
+//                  WATCH PHOTOS API
+
+// ================================================================================================
+
+// FRONT IMAGE
+router.route('/watch/:id/add-front-image')
+  .post(multipartMiddleware, function(req, res, next) {
+    var file = req.files.file;
+    file.name = file.name.replace(/\s/g, "");
+    var uploadDate = new Date().toISOString();
+    uploadDate = uploadDate.replace(/-/g, "");
+    uploadDate = uploadDate.replace(/:/g, "");
+    uploadDate = uploadDate.replace(/\./g, "");
+    uploadDate = uploadDate.replace(/_/g, "");
+    var tempPath = file.path;
+    var targetPath = path.join(__dirname, "../public/images/watches/" + uploadDate + file.name);
+    var savePath = "/images/watches/" + uploadDate + file.name;
+
+    fs.rename(tempPath, targetPath, function(err) {
+      if(err) {
+        return res.status(500).send(err);
+      }
+      Watch.findById(req.params.id, function(err, watch) {
+        if(err) {
+          return res.status(500).send(err);
+        }
+        watch.photo_front = savePath;
+        watch.save(function(err, watch) {
+          if(err) {
+            return res.status(500).send(err);
+          }
+          return res.status(200).send(watch);
+        });
+      });
+    });
+  });
+
+// BACK IMAGE
+router.route('/watch/:id/add-back-image')
+  .post(multipartMiddleware, function(req, res, next) {
+    var file = req.files.file;
+    file.name = file.name.replace(/\s/g, "");
+    var uploadDate = new Date().toISOString();
+    uploadDate = uploadDate.replace(/-/g, "");
+    uploadDate = uploadDate.replace(/:/g, "");
+    uploadDate = uploadDate.replace(/\./g, "");
+    uploadDate = uploadDate.replace(/_/g, "");
+    var tempPath = file.path;
+    var targetPath = path.join(__dirname, "../public/images/watches/" + uploadDate + file.name);
+    var savePath = "/images/watches/" + uploadDate + file.name;
+
+    fs.rename(tempPath, targetPath, function(err) {
+      if(err) {
+        return res.status(500).send(err);
+      }
+      Watch.findById(req.params.id, function(err, watch) {
+        if(err) {
+          return res.status(500).send(err);
+        }
+        watch.photo_back = savePath;
+        watch.save(function(err, watch) {
+          if(err) {
+            return res.status(500).send(err);
+          }
+          return res.status(200).send(watch);
+        });
+      });
+    });
+  });
+
+// 3/4 IMAGE
+router.route('/watch/:id/add-quarter-image')
+  .post(multipartMiddleware, function(req, res, next) {
+    var file = req.files.file;
+    file.name = file.name.replace(/\s/g, "");
+    var uploadDate = new Date().toISOString();
+    uploadDate = uploadDate.replace(/-/g, "");
+    uploadDate = uploadDate.replace(/:/g, "");
+    uploadDate = uploadDate.replace(/\./g, "");
+    uploadDate = uploadDate.replace(/_/g, "");
+    var tempPath = file.path;
+    var targetPath = path.join(__dirname, "../public/images/watches/" + uploadDate + file.name);
+    var savePath = "/images/watches/" + uploadDate + file.name;
+
+    fs.rename(tempPath, targetPath, function(err) {
+      if(err) {
+        return res.status(500).send(err);
+      }
+      Watch.findById(req.params.id, function(err, watch) {
+        if(err) {
+          return res.status(500).send(err);
+        }
+        watch.photo_quarter = savePath;
+        watch.save(function(err, watch) {
+          if(err) {
+            return res.status(500).send(err);
+          }
+          return res.status(200).send(watch);
+        });
+      });
+    });
+  });
+
+// EXTRA IMAGES
+router.route('/watch/:id/add-extra-image')
+  .post(multipartMiddleware, function(req, res, next) {
+    var file = req.files.file;
+    file.name = file.name.replace(/\s/g, "");
+    var uploadDate = new Date().toISOString();
+    uploadDate = uploadDate.replace(/-/g, "");
+    uploadDate = uploadDate.replace(/:/g, "");
+    uploadDate = uploadDate.replace(/\./g, "");
+    uploadDate = uploadDate.replace(/_/g, "");
+    var tempPath = file.path;
+    var targetPath = path.join(__dirname, "../public/images/watches/" + uploadDate + file.name);
+    var savePath = "/images/watches/" + uploadDate + file.name;
+
+    fs.rename(tempPath, targetPath, function(err) {
+      if(err) {
+        return res.status(500).send(err);
+      }
+      Watch.findById(req.params.id, function(err, watch) {
+        if(err) {
+          return res.status(500).send(err);
+        }
+        watch.extra_photos.push(savePath);
+        watch.save(function(err, watch) {
+          if(err) {
+            return res.status(500).send(err);
+          }
+          return res.status(200).send(watch);
+        });
+      });
+    });
+  });
+
+// ================================================================================================
+
 //                  NEWSPOST
 
 // ================================================================================================
@@ -323,6 +490,45 @@ router.route('/newspost/:id')
 
 // ================================================================================================
 
+//                  NEWSPOST PHOTOS API
+
+// ================================================================================================
+
+router.route('/newspost/:id/add-image')
+  .post(multipartMiddleware, function(req, res, next) {
+    var file = req.files.file;
+    file.name = file.name.replace(/\s/g, "");
+    var uploadDate = new Date().toISOString();
+    uploadDate = uploadDate.replace(/-/g, "");
+    uploadDate = uploadDate.replace(/:/g, "");
+    uploadDate = uploadDate.replace(/\./g, "");
+    uploadDate = uploadDate.replace(/_/g, "");
+    var tempPath = file.path;
+    var targetPath = path.join(__dirname, "../public/images/newsposts/" + uploadDate + file.name);
+    var savePath = "/images/newsposts/" + uploadDate + file.name;
+
+    fs.rename(tempPath, targetPath, function(err) {
+      if(err) {
+        return res.status(500).send(err);
+      }
+      NewsPost.findById(req.params.id, function(err, newspost) {
+        if(err) {
+          return res.status(500).send(err);
+        }
+        newspost.photos.push(savePath);
+        newspost.save(function(err, newspost) {
+          if(err) {
+            return res.status(500).send(err);
+          }
+          return res.status(200).send(newspost);
+        });
+      });
+    });
+  });
+
+
+// ================================================================================================
+
 //                  CALENDARELEMENT
 
 // ================================================================================================
@@ -341,7 +547,10 @@ router.route('/calendarelement')
     var calendarelement = new CalendarElement();
 
     calendarelement.text = req.body.text;
-    calendarelement.date = req.body.date;
+    calendarelement.time = req.body.time;
+    calendarelement.day = req.body.day;
+    calendarelement.month = req.body.month;
+    calendarelement.year = req.body.year;
     calendarelement.place = req.body.place;
 
     calendarelement.save(function(err, calendarelement) {
@@ -373,7 +582,10 @@ router.route('/calendarelement/:id')
       }
 
       calendarelement.text = req.body.text;
-      calendarelement.date = req.body.date;
+      calendarelement.time = req.body.time;
+      calendarelement.day = req.body.day;
+      calendarelement.month = req.body.month;
+      calendarelement.year = req.body.year;
       calendarelement.place = req.body.place;
 
       calendarelement.save(function(err, calendarelement) {
@@ -394,6 +606,44 @@ router.route('/calendarelement/:id')
         res.status(500).send(err);
       }
       res.status(200).send("Calendar element removed.");
+    });
+  });
+
+// ================================================================================================
+
+//                  CALENDARELEMENT PHOTO API
+
+// ================================================================================================
+
+router.route('/calendarelement/:id/add-image')
+  .post(multipartMiddleware, function(req, res, next) {
+    var file = req.files.file;
+    file.name = file.name.replace(/\s/g, "");
+    var uploadDate = new Date().toISOString();
+    uploadDate = uploadDate.replace(/-/g, "");
+    uploadDate = uploadDate.replace(/:/g, "");
+    uploadDate = uploadDate.replace(/\./g, "");
+    uploadDate = uploadDate.replace(/_/g, "");
+    var tempPath = file.path;
+    var targetPath = path.join(__dirname, "../public/images/calendarelements/" + uploadDate + file.name);
+    var savePath = "/images/calendarelements/" + uploadDate + file.name;
+
+    fs.rename(tempPath, targetPath, function(err) {
+      if(err) {
+        return res.status(500).send(err);
+      }
+      CalendarElement.findById(req.params.id, function(err, calendarelement) {
+        if(err) {
+          return res.status(500).send(err);
+        }
+        calendarelement.photo = savePath;
+        calendarelement.save(function(err, calendarelement) {
+          if(err) {
+            return res.status(500).send(err);
+          }
+          return res.status(200).send(calendarelement);
+        });
+      });
     });
   });
 
@@ -518,5 +768,43 @@ router.route('/pressphoto/:id')
       res.status(200).send("Press photo removed.");
     });
   })
+
+// ================================================================================================
+
+//                  PRESSPHOTO PHOTO API
+
+// ================================================================================================
+
+router.route('/pressphoto/:id/add-image')
+  .post(multipartMiddleware, function(req, res, next) {
+    var file = req.files.file;
+    file.name = file.name.replace(/\s/g, "");
+    var uploadDate = new Date().toISOString();
+    uploadDate = uploadDate.replace(/-/g, "");
+    uploadDate = uploadDate.replace(/:/g, "");
+    uploadDate = uploadDate.replace(/\./g, "");
+    uploadDate = uploadDate.replace(/_/g, "");
+    var tempPath = file.path;
+    var targetPath = path.join(__dirname, "../public/images/pressphotos/" + uploadDate + file.name);
+    var savePath = "/images/pressphotos/" + uploadDate + file.name;
+
+    fs.rename(tempPath, targetPath, function(err) {
+      if(err) {
+        return res.status(500).send(err);
+      }
+      PressPhoto.findById(req.params.id, function(err, pressphoto) {
+        if(err) {
+          return res.status(500).send(err);
+        }
+        pressphoto.photo = savePath;
+        pressphoto.save(function(err, pressphoto) {
+          if(err) {
+            return res.status(500).send(err);
+          }
+          return res.status(200).send(pressphoto);
+        });
+      });
+    });
+  });
 
 module.exports = router;

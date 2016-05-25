@@ -4,7 +4,8 @@ var newsPostSchema = new mongoose.Schema({
   text: String,
   title: String,
   date: String,
-  photos: [String]
+  photos: [String],
+  created_at: {type: Date, default: Date.now}
 });
 
 module.exports = mongoose.model("NewsPost", newsPostSchema);

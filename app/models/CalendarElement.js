@@ -2,7 +2,10 @@ var mongoose = require('mongoose');
 
 var calendarElementSchema = new mongoose.Schema({
   text: String,
-  date: String,
+  time: String,
+  day: String,
+  month: String,
+  year: String,
   place: String,
   photo: String
 });

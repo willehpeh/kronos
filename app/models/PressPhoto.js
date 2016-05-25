@@ -3,7 +3,8 @@ var mongoose = require('mongoose');
 var pressPhotoSchema = new mongoose.Schema({
   photo: String,
   title: String,
-  caption: String
+  caption: String,
+  created_at: {type: Date, default: Date.now}
 });
 
 module.exports = mongoose.model("PressPhoto", pressPhotoSchema);
