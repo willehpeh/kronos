@@ -591,12 +591,12 @@ router.route('/calendarelement')
     }
     var calendarelement = new CalendarElement();
 
-    calendarelement.text = req.body.text;
-    calendarelement.time = req.body.time;
-    calendarelement.day = req.body.day;
-    calendarelement.month = req.body.month;
-    calendarelement.year = req.body.year;
-    calendarelement.place = req.body.place;
+    calendarelement.text = req.body.element.text;
+    calendarelement.time = req.body.element.time;
+    calendarelement.day = req.body.element.day;
+    calendarelement.month = req.body.element.month;
+    calendarelement.year = req.body.element.year;
+    calendarelement.place = req.body.element.place;
 
     calendarelement.save(function(err, calendarelement) {
       if(err) {
@@ -626,12 +626,12 @@ router.route('/calendarelement/:id')
         res.status(500).send(err);
       }
 
-      calendarelement.text = req.body.text;
-      calendarelement.time = req.body.time;
-      calendarelement.day = req.body.day;
-      calendarelement.month = req.body.month;
-      calendarelement.year = req.body.year;
-      calendarelement.place = req.body.place;
+      calendarelement.text = req.body.element.text;
+      calendarelement.time = req.body.element.time;
+      calendarelement.day = req.body.element.day;
+      calendarelement.month = req.body.element.month;
+      calendarelement.year = req.body.element.year;
+      calendarelement.place = req.body.element.place;
 
       calendarelement.save(function(err, calendarelement) {
         if(err) {
