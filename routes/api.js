@@ -36,6 +36,7 @@ var tokenMiddleware = function(req, res, next) {
         console.log("Retailer token valid, success!");
         req.body.token = token;
         req.body.retailer = true;
+        req.body.admin = false;
         next();
       } else {
         console.log("Invalid user.")
@@ -278,19 +279,46 @@ router.route('/newspost')
 router.route('/newspost/:id')
 // SPECIFIC NEWSPOST ::: GET
   .get(function(req, res) {
-
+    NewsPost.findById(req.params.id, function(err, newspost) {
+      if(err) {
+        res.status(500).send(err);
+      }
+      res.send(newspost);
+    });
   })
 // SPECIFIC NEWSPOST ::: PUT
   .put(tokenMiddleware, function(req, res) {
     if(!req.body.admin) {
       return res.status(401).send("You do not have admin privileges.")
     }
+    NewsPost.findById(req.params.id, function(err, newspost) {
+      if(err) {
+        res.status(500).send(err);
+      }
+
+      newspost.text = req.body.text;
+      newspost.title = req.body.title;
+      newspost.date = req.body.date;
+
+      newspost.save(function(err, newspost) {
+        if(err) {
+          return res.status(500).send(err);
+        }
+        return res.send(newspost);
+      });
+    })
   })
 // SPECIFIC NEWSPOST ::: DELETE
   .delete(tokenMiddleware, function(req, res) {
     if(!req.body.admin) {
       return res.status(401).send("You do not have admin privileges.")
     }
+    NewsPost.remove({_id: req.params.id}, function(err) {
+      if(err) {
+        res.status(500).send(err);
+      }
+      res.status(200).send("News post removed.");
+    });
   });
 
 // ================================================================================================
@@ -327,19 +355,46 @@ router.route('/calendarelement')
 router.route('/calendarelement/:id')
 // SPECIFIC CALENDARPOST ::: GET
   .get(function(req, res) {
-
+    CalendarElement.findById(req.params.id, function(err, calendarelement) {
+      if(err) {
+        res.status(500).send(err);
+      }
+      res.send(calendarelement);
+    });
   })
 // SPECIFIC CALENDARPOST ::: PUT
   .put(tokenMiddleware, function(req, res) {
     if(!req.body.admin) {
       return res.status(401).send("You do not have admin privileges.")
     }
+    CalendarElement.findById(req.params.id, function(err, calendarelement) {
+      if(err) {
+        res.status(500).send(err);
+      }
+
+      calendarelement.text = req.body.text;
+      calendarelement.date = req.body.date;
+      calendarelement.place = req.body.place;
+
+      calendarelement.save(function(err, calendarelement) {
+        if(err) {
+          return res.status(500).send(err);
+        }
+        return res.send(calendarelement);
+      });
+    })
   })
 // SPECIFIC CALENDARPOST ::: DELETE
   .delete(tokenMiddleware, function(req, res) {
     if(!req.body.admin) {
       return res.status(401).send("You do not have admin privileges.")
     }
+    CalendarElement.remove({_id: req.params.id}, function(err) {
+      if(err) {
+        res.status(500).send(err);
+      }
+      res.status(200).send("Calendar element removed.");
+    });
   });
 
 // ================================================================================================
@@ -361,15 +416,28 @@ router.route('/user')
 router.route('/user/:id')
 // SPECIFIC USER ::: GET
   .get(function(req, res) {
-
+    User.findById(req.params.id, function(err, user) {
+      if(err) {
+        res.status(500).send(err);
+      }
+      res.send(user);
+    });
   })
 // SPECIFIC USER ::: PUT
   .put(function(req, res) {
 
   })
 // SPECIFIC USER ::: DELETE
-  .delete(function(req, res) {
-
+  .delete(tokenMiddleware, function(req, res) {
+    if(!req.body.admin) {
+      return res.status(401).send("You do not have admin privileges.")
+    }
+    User.remove({_id: req.params.id}, function(err) {
+      if(err) {
+        res.status(500).send(err);
+      }
+      res.status(200).send("User removed.");
+    });
   });
 
 // ================================================================================================
@@ -422,12 +490,33 @@ router.route('/pressphoto/:id')
     if(!req.body.admin) {
       return res.status(401).send("You do not have admin privileges.")
     }
+    PressPhoto.findById(req.params.id, function(err, pressphoto) {
+      if(err) {
+        res.status(500).send(err);
+      }
+
+      pressphoto.title = req.body.title;
+      pressphoto.caption = req.body.caption;
+
+      pressphoto.save(function(err, pressphoto) {
+        if(err) {
+          return res.status(500).send(err);
+        }
+        return res.send(pressphoto);
+      });
+    })
   })
 // SPECIFIC PRESSPHOTO ::: DELETE
   .delete(tokenMiddleware, function(req, res) {
     if(!req.body.admin) {
       return res.status(401).send("You do not have admin privileges.")
     }
+    PressPhoto.remove({_id: req.params.id}, function(err) {
+      if(err) {
+        res.status(500).send(err);
+      }
+      res.status(200).send("Press photo removed.");
+    });
   })
 
 module.exports = router;
