@@ -7,5 +7,8 @@ module.exports = {
    via_address : 'will.the.ginger@gmail.com',
    via_pw : 'silverfish93',
 
-   to_address : 'will_alexander@me.com'
+   to_address : 'will_alexander@me.com',
+
+   admin : 'JPHervet',
+   retailer : 'retailer'
 }

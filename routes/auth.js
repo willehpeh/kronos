@@ -14,8 +14,6 @@ router.route('/signup')
     // Retrieve username and password from request
     var username = req.body.username;
     var password = req.body.password;
-    var admin = req.body.admin;
-    var retailer = req.body.retailer;
 
     // Check if user already exists
     User.findOne({ name: username }, function(err, user) {
@@ -29,8 +27,6 @@ router.route('/signup')
         // Create new user
         var user = new User();
         user.name = username;
-        user.admin = admin;
-        user.retailer = retailer;
 
         // Create password hash and store to db
         var passwordHash = crypto
@@ -46,7 +42,7 @@ router.route('/signup')
         });
 
         // Create and serve token
-        var token = jwt.sign(user, config.secret, {
+        var token = jwt.sign({user: user}, config.secret, {
           expiresIn: 3600 // expires in 60 minutes
         });
         return res.status(200).send({success: true, token: token, message: "Authentication successful."});
@@ -82,7 +78,7 @@ router.route('/login')
 
       // Username and password correct, supply token
       if(user.password == passwordHash) {
-        var token = jwt.sign(user, config.secret, {
+        var token = jwt.sign({user: user}, config.secret, {
           expiresIn: 3600 // expires in 60 minutes
         });
         return res.status(200).send({success: true, user: user._id, token: token, message: "Authentication successful."});

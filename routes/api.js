@@ -27,17 +27,19 @@ var tokenMiddleware = function(req, res, next) {
       if (err) {
         console.log("Token invalid.");
         return res.status(401).send({errorMessage: "Token expiré."});
-      } else if(decoded.admin) {
+      } else if (decoded.user.name == config.admin) {
         console.log("Admin token valid, success!");
         req.body.token = token;
         req.body.admin = true;
         next();
-      } else if(decoded.retailer) {
+      } else if (decoded.user.name == config.retailer) {
         console.log("Retailer token valid, success!");
         req.body.token = token;
-        req.body.admin = false;
         req.body.retailer = true;
         next();
+      } else {
+        console.log("Invalid user.")
+        return res.status(401).send({errorMessage: "Invalid user " + JSON.stringify(decoded.user)})
       }
     });
 
@@ -91,11 +93,11 @@ router.route('/contact')
     });
   });
 
-  // ================================================================================================
+// ================================================================================================
 
-  //                  NEWSLETTER
+//                  NEWSLETTER
 
-  // ================================================================================================
+// ================================================================================================
 
   router.route('/newsletter-sub')
     .post(function(req, res) {
@@ -128,6 +130,12 @@ router.route('/contact')
       });
     });
 
+// ================================================================================================
+
+//                  WATCH
+
+// ================================================================================================
+
 router.route('/watch')
 // ALL WATCH ::: GET
   .get(function(req, res, next) {
@@ -140,7 +148,10 @@ router.route('/watch')
   })
 
 // SPECIFIC WATCH ::: POST
-  .post(function(req, res) {
+  .post(tokenMiddleware, function(req, res) {
+    if(!req.body.admin) {
+      return res.status(401).send("You do not have admin privileges.")
+    }
     var watch = new Watch();
 
     watch.marque = req.body.marque;
@@ -183,7 +194,10 @@ router.route('/watch/:id')
     });
   })
 // SPECIFIC WATCH ::: PUT
-  .put(function(req, res) {
+  .put(tokenMiddleware, function(req, res) {
+    if(!req.body.admin) {
+      return res.status(401).send("You do not have admin privileges.")
+    }
     Watch.findById(req.params.id, function(err, watch) {
       if(err) {
         res.status(500).send(err);
@@ -218,7 +232,10 @@ router.route('/watch/:id')
     })
   })
 // SPECIFIC WATCH ::: DELETE
-  .delete(function(req, res) {
+  .delete(tokenMiddleware, function(req, res) {
+    if(!req.body.admin) {
+      return res.status(401).send("You do not have admin privileges.")
+    }
     Watch.remove({_id: req.params.id}, function(err) {
       if(err) {
         res.status(500).send(err);
@@ -227,32 +244,190 @@ router.route('/watch/:id')
     });
   });
 
+// ================================================================================================
+
+//                  NEWSPOST
+
+// ================================================================================================
+
+router.route('/newspost')
 // ALL NEWSPOST ::: GET
+  .get(function(req, res) {
 
-// SPECIFIC NEWSPOST ::: GET
+  })
+
 // SPECIFIC NEWSPOST ::: POST
+  .post(tokenMiddleware, function(req, res) {
+    if(!req.body.admin) {
+      return res.status(401).send("You do not have admin privileges.")
+    }
+    var newspost = new NewsPost();
+
+    newspost.text = req.body.text;
+    newspost.title = req.body.title;
+    newspost.date = req.body.date;
+
+    newspost.save(function(err, newspost) {
+      if(err) {
+        return res.status(500).send(err);
+      }
+      return res.send(newspost);
+    });
+  });
+
+router.route('/newspost/:id')
+// SPECIFIC NEWSPOST ::: GET
+  .get(function(req, res) {
+
+  })
 // SPECIFIC NEWSPOST ::: PUT
+  .put(tokenMiddleware, function(req, res) {
+    if(!req.body.admin) {
+      return res.status(401).send("You do not have admin privileges.")
+    }
+  })
 // SPECIFIC NEWSPOST ::: DELETE
+  .delete(tokenMiddleware, function(req, res) {
+    if(!req.body.admin) {
+      return res.status(401).send("You do not have admin privileges.")
+    }
+  });
 
+// ================================================================================================
+
+//                  CALENDARELEMENT
+
+// ================================================================================================
+
+router.route('/calendarelement')
 // ALL CALENDARELEMENT ::: GET
+  .get(function(req, res) {
 
-// SPECIFIC CALENDARPOST ::: GET
+  })
+
 // SPECIFIC CALENDARPOST ::: POST
+  .post(tokenMiddleware, function(req, res) {
+    if(!req.body.admin) {
+      return res.status(401).send("You do not have admin privileges.")
+    }
+    var calendarelement = new CalendarElement();
+
+    calendarelement.text = req.body.text;
+    calendarelement.date = req.body.date;
+    calendarelement.place = req.body.place;
+
+    calendarelement.save(function(err, calendarelement) {
+      if(err) {
+        return res.status(500).send(err);
+      }
+      return res.send(calendarelement);
+    });
+  });
+
+router.route('/calendarelement/:id')
+// SPECIFIC CALENDARPOST ::: GET
+  .get(function(req, res) {
+
+  })
 // SPECIFIC CALENDARPOST ::: PUT
+  .put(tokenMiddleware, function(req, res) {
+    if(!req.body.admin) {
+      return res.status(401).send("You do not have admin privileges.")
+    }
+  })
 // SPECIFIC CALENDARPOST ::: DELETE
+  .delete(tokenMiddleware, function(req, res) {
+    if(!req.body.admin) {
+      return res.status(401).send("You do not have admin privileges.")
+    }
+  });
 
+// ================================================================================================
+
+//                  USER
+
+// ================================================================================================
+
+router.route('/user')
 // ALL USER ::: GET
+  .get(function(req, res) {
 
-// SPECIFIC USER ::: GET
+  })
 // SPECIFIC USER ::: POST
+  .post(function(req, res) {
+
+  });
+
+router.route('/user/:id')
+// SPECIFIC USER ::: GET
+  .get(function(req, res) {
+
+  })
 // SPECIFIC USER ::: PUT
+  .put(function(req, res) {
+
+  })
 // SPECIFIC USER ::: DELETE
+  .delete(function(req, res) {
 
+  });
+
+// ================================================================================================
+
+//                  PRESSPHOTO
+
+// ================================================================================================
+
+router.route('/pressphoto')
 // ALL PRESSPHOTO ::: GET
+  .get(function(req, res) {
+    PressPhoto.find(function(err, data) {
+      if(err) {
+        res.status(500).send(err);
+      }
+      res.send(data);
+    });
+  })
 
-// SPECIFIC PRESSPHOTO ::: GET
 // SPECIFIC PRESSPHOTO ::: POST
+  .post(tokenMiddleware, function(req, res) {
+    if(!req.body.admin) {
+      return res.status(401).send("You do not have admin privileges.")
+    }
+    var pressphoto = new PressPhoto();
+
+    pressphoto.title = req.body.title;
+    pressphoto.caption = req.body.caption;
+
+    pressphoto.save(function(err, pressphoto) {
+      if(err) {
+        return res.status(500).send(err);
+      }
+      return res.send(pressphoto);
+    });
+  })
+
+router.route('/pressphoto/:id')
+// SPECIFIC PRESSPHOTO ::: GET
+  .get(function(req, res) {
+    PressPhoto.findById(req.params.id, function(err, pressphoto) {
+      if(err) {
+        res.status(500).send(err);
+      }
+      res.send(pressphoto);
+    });
+  })
 // SPECIFIC PRESSPHOTO ::: PUT
+  .put(tokenMiddleware, function(req, res) {
+    if(!req.body.admin) {
+      return res.status(401).send("You do not have admin privileges.")
+    }
+  })
 // SPECIFIC PRESSPHOTO ::: DELETE
+  .delete(tokenMiddleware, function(req, res) {
+    if(!req.body.admin) {
+      return res.status(401).send("You do not have admin privileges.")
+    }
+  })
 
 module.exports = router;
