@@ -1,6 +1,15 @@
 angular.module('KronosDashboard').controller('DashboardCtrl', DashboardCtrl);
 
-function DashboardCtrl($scope, AuthService, WatchService, store, $window, $timeout) {
+function DashboardCtrl(
+  $scope,
+  AuthService,
+  WatchService,
+  NewsService,
+  PressPhotoService,
+  CalendarService,
+  store,
+  $window,
+  $timeout) {
 
   $scope.login = function() {
     var user = {username: $scope.username, password: $scope.password};
@@ -57,9 +66,32 @@ function DashboardCtrl($scope, AuthService, WatchService, store, $window, $timeo
 
   var getWatches = function() {
     WatchService.getWatches().then(function(data) {
-      console.log("getWatches Success!")
+      console.log("getWatches Success!");
       $scope.watchArray = data;
     });
   }
+
+  var getAllNews = function() {
+    NewsService.getNewsPosts().then(function(data) {
+      console.log("getNews Success!");
+      $scope.newsArray = data;
+    }, function(data) {
+      console.log("getNews went wrong!");
+      console.log(data);
+    });
+  }
+
+  var getAllPressPhotos = function() {
+    PressPhotoService.getPressPhotos().then(function(data) {
+      console.log("getPressPhotos Success!");
+      $scope.pressPhotoArray = data;
+    }, function(data) {
+      console.log("getPressPhotos went wrong!");
+      console.log(data);
+    });
+  }
+
   getWatches();
+  getAllNews();
+  getAllPressPhotos();
 }

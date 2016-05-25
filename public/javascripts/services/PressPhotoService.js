@@ -1,27 +1,12 @@
-angular.module('KronosDashboard').factory('NewsService', function NewsService($http, $q) {
+angular.module('KronosDashboard').factory('PressPhotoService', function PressPhotoService($http, $q) {
 
   return {
 
-    newNewsPost: function(post, token) {
+    newPressPhoto: function(pressphoto, token) {
       var response = {};
       var defer = $q.defer();
 
-      $http.post('/api/newspost', {newspost: post, token: token}).then(function(data) {
-        response = data.data;
-        defer.resolve(response);
-      }, function(data) {
-        response = data;
-        defer.resolve(response);
-      });
-
-      return defer.promise;
-    },
-
-    getNewsPosts: function() {
-      var response = {};
-      var defer = $q.defer();
-
-      $http.get('/api/newspost').then(function(data) {
+      $http.post('/api/pressphoto', {pressphoto: pressphoto, token: token}).then(function(data) {
         response = data.data;
         defer.resolve(response);
       });
@@ -29,23 +14,11 @@ angular.module('KronosDashboard').factory('NewsService', function NewsService($h
       return defer.promise;
     },
 
-    getNewsPost: function(id) {
+    getPressPhotos: function() {
       var response = {};
       var defer = $q.defer();
 
-      $http.get('/api/newspost/' + id).then(function(data) {
-        response = data.data;
-        defer.resolve(response);
-      })
-
-      return defer.promise;
-    },
-
-    modifyNewsPost: function(id, post, token) {
-      var response = {};
-      var defer = $q.defer();
-
-      $http.put('/api/newspost/' + id, {newspost: post, token: token}).then(function(data) {
+      $http.get('/api/pressphoto').then(function(data) {
         response = data.data;
         defer.resolve(response);
       });
@@ -53,14 +26,38 @@ angular.module('KronosDashboard').factory('NewsService', function NewsService($h
       return defer.promise;
     },
 
-    deleteNewsPost: function(id, token) {
+    getPressPhoto: function(id) {
       var response = {};
       var defer = $q.defer();
 
-      $http.delete('/api/newspost/' + id, {headers: {'x-access-token': token}}).then(function(data) {
+      $http.get('/api/pressphoto/' + id).then(function(data) {
         response = data.data;
         defer.resolve(response);
-      })
+      });
+
+      return defer.promise;
+    },
+
+    modifyPressPhoto: function(id, pressphoto, token) {
+      var response = {};
+      var defer = $q.defer();
+
+      $http.put('/api/pressphoto/' + id, {pressphoto: pressphoto, token: token}).then(function(data) {
+        response = data.data;
+        defer.resolve(response);
+      });
+
+      return defer.promise;
+    },
+
+    deletePressPhoto: function(id, token) {
+      var response = {};
+      var defer = $q.defer();
+
+      $http.delete('/api/pressphoto' + id, {headers: {'x-access-token': token}}).then(function(data) {
+        response = data.data;
+        defer.resolve(response);
+      });
 
       return defer.promise;
     }

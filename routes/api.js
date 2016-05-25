@@ -456,7 +456,12 @@ router.route('/watch/:id/add-extra-image')
 router.route('/newspost')
 // ALL NEWSPOST ::: GET
   .get(function(req, res) {
-
+    NewsPost.find(function(err, data) {
+      if(err) {
+        res.status(500).send(err);
+      }
+      res.send(data); // return all data found
+    });
   })
 
 // SPECIFIC NEWSPOST ::: POST
@@ -571,7 +576,12 @@ router.route('/newspost/:id/add-image')
 router.route('/calendarelement')
 // ALL CALENDARELEMENT ::: GET
   .get(function(req, res) {
-
+    CalendarElement.find(function(err, data) {
+      if(err) {
+        res.status(500).send(err);
+      }
+      res.send(data); // return all data found
+    });
   })
 
 // SPECIFIC CALENDARPOST ::: POST
@@ -749,8 +759,8 @@ router.route('/pressphoto')
     }
     var pressphoto = new PressPhoto();
 
-    pressphoto.title = req.body.title;
-    pressphoto.caption = req.body.caption;
+    pressphoto.title = req.body.pressphoto.title;
+    pressphoto.caption = req.body.pressphoto.caption;
 
     pressphoto.save(function(err, pressphoto) {
       if(err) {
@@ -780,8 +790,8 @@ router.route('/pressphoto/:id')
         res.status(500).send(err);
       }
 
-      pressphoto.title = req.body.title;
-      pressphoto.caption = req.body.caption;
+      pressphoto.title = req.body.pressphoto.title;
+      pressphoto.caption = req.body.pressphoto.caption;
 
       pressphoto.save(function(err, pressphoto) {
         if(err) {
