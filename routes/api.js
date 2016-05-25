@@ -169,21 +169,28 @@ router.route('/contact')
 router.route('/watch')
 // ALL WATCH ::: GET
   .get(function(req, res, next) {
+
+    // search MongoDB for all Watch objects
     Watch.find(function(err, data) {
       if(err) {
         res.status(500).send(err);
       }
-      res.send(data);
+      res.send(data); // return all data found
     });
   })
 
 // SPECIFIC WATCH ::: POST
   .post(tokenMiddleware, function(req, res) {
+
+    // tokenMiddleware will respond with admin true/false
     if(!req.body.admin) {
       return res.status(401).send("You do not have admin privileges.")
     }
+
+    // initialize Watch object
     var watch = new Watch();
 
+    // grab info from request, apply to new Watch()
     watch.marque = req.body.marque;
     watch.nom = req.body.nom;
     watch.quantite = req.body.quantite;
@@ -205,6 +212,7 @@ router.route('/watch')
     watch.lunette = req.body.lunette;
     watch.poids = req.body.poids;
 
+    // use MongoDB to save new Watch()
     watch.save(function(err, watch) {
       if(err) {
         return res.status(500).send(err);
@@ -216,6 +224,8 @@ router.route('/watch')
 router.route('/watch/:id')
 // SPECIFIC WATCH ::: GET
   .get(function(req, res) {
+
+    // use id from params to find specific watch with MongoDB
     Watch.findById(req.params.id, function(err, watch) {
       if(err) {
         res.status(500).send(err);
@@ -225,13 +235,19 @@ router.route('/watch/:id')
   })
 // SPECIFIC WATCH ::: PUT
   .put(tokenMiddleware, function(req, res) {
+
+    // tokenMiddleware responds with admin true/false
     if(!req.body.admin) {
       return res.status(401).send("You do not have admin privileges.")
     }
+
+    // use id from params to find specific watch with MongoDB
     Watch.findById(req.params.id, function(err, watch) {
       if(err) {
         res.status(500).send(err);
       }
+
+      // grab info from request and apply to Watch found by MongoDB
       watch.marque = req.body.marque;
       watch.nom = req.body.nom;
       watch.quantite = req.body.quantite;
@@ -253,6 +269,8 @@ router.route('/watch/:id')
       watch.lunette = req.body.lunette;
       watch.poids = req.body.poids;
 
+
+      // use MongoDB to save Watch object with any changes
       watch.save(function(err, watch) {
         if(err) {
           return res.status(500).send(err);
@@ -263,9 +281,13 @@ router.route('/watch/:id')
   })
 // SPECIFIC WATCH ::: DELETE
   .delete(tokenMiddleware, function(req, res) {
+
+    // tokenMiddleware responds with admin true/false
     if(!req.body.admin) {
       return res.status(401).send("You do not have admin privileges.")
     }
+
+    // use id from params to find and remove Watch from MongoDB
     Watch.remove({_id: req.params.id}, function(err) {
       if(err) {
         res.status(500).send(err);
@@ -283,26 +305,39 @@ router.route('/watch/:id')
 // FRONT IMAGE
 router.route('/watch/:id/add-front-image')
   .post(multipartMiddleware, function(req, res, next) {
-    var file = req.files.file;
-    file.name = file.name.replace(/\s/g, "");
+    var file = req.files.file; // get file from request
+    file.name = file.name.replace(/\s/g, ""); // remove spaces from filename
+
+    // prepare filename using uploadDate for name uniqueness
+    // then remove all characters that could cause compatibility problems
     var uploadDate = new Date().toISOString();
     uploadDate = uploadDate.replace(/-/g, "");
     uploadDate = uploadDate.replace(/:/g, "");
     uploadDate = uploadDate.replace(/\./g, "");
     uploadDate = uploadDate.replace(/_/g, "");
-    var tempPath = file.path;
+
+    var tempPath = file.path; // path of file during stream
+
+    // targetPath is actual path, savePath is String sent to MongoDB for accessing image
     var targetPath = path.join(__dirname, "../public/images/watches/" + uploadDate + file.name);
     var savePath = "/images/watches/" + uploadDate + file.name;
 
+    // place file at permanent address
     fs.rename(tempPath, targetPath, function(err) {
       if(err) {
         return res.status(500).send(err);
       }
+
+      // use MongoDB to find Watch() object corresponding to id
       Watch.findById(req.params.id, function(err, watch) {
         if(err) {
           return res.status(500).send(err);
         }
+
+        // point Watch() to photo
         watch.photo_front = savePath;
+
+        // use MongoDB to save Watch() object with new photo
         watch.save(function(err, watch) {
           if(err) {
             return res.status(500).send(err);
