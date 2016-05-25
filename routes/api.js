@@ -466,9 +466,9 @@ router.route('/newspost')
     }
     var newspost = new NewsPost();
 
-    newspost.text = req.body.text;
-    newspost.title = req.body.title;
-    newspost.date = req.body.date;
+    newspost.text = req.body.newspost.text;
+    newspost.title = req.body.newspost.title;
+    newspost.date = req.body.newspost.date;
 
     newspost.save(function(err, newspost) {
       if(err) {
@@ -498,9 +498,9 @@ router.route('/newspost/:id')
         res.status(500).send(err);
       }
 
-      newspost.text = req.body.text;
-      newspost.title = req.body.title;
-      newspost.date = req.body.date;
+      newspost.text = req.body.newspost.text;
+      newspost.title = req.body.newspost.title;
+      newspost.date = req.body.newspost.date;
 
       newspost.save(function(err, newspost) {
         if(err) {
