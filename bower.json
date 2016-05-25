@@ -1,0 +1,13 @@
+{
+  "name": "kronosnpmppp",
+  "version": "0.0.1",
+  "dependencies": {
+    "bootstrap": "latest",
+    "font-awesome": "latest",
+    "animate.css": "latest",
+    "angular": "latest",
+    "angular-route": "latest",
+    "angular-animate": "^1.5.0",
+    "a0-angular-storage": "latest"
+  }
+}
