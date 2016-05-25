@@ -43,6 +43,18 @@ function DashboardCtrl($scope, AuthService, WatchService, store, $window, $timeo
     });
   }
 
+  $scope.deleteWatch = function(id) {
+    var token = store.get('token');
+    $('#'+id).css({
+      'color': '#AAA'
+    });
+    WatchService.deleteWatch(id, token).then(function(data) {
+      console.log('Watch deleted.');
+      console.log(data);
+      getWatches();
+    })
+  }
+
   var getWatches = function() {
     WatchService.getWatches().then(function(data) {
       console.log("getWatches Success!")

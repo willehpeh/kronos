@@ -248,26 +248,26 @@ router.route('/watch/:id')
       }
 
       // grab info from request and apply to Watch found by MongoDB
-      watch.marque = req.body.marque;
-      watch.nom = req.body.nom;
-      watch.quantite = req.body.quantite;
-      watch.reference = req.body.reference;
-      watch.annee = req.body.annee;
-      watch.description = req.body.description;
-      watch.categorie = req.body.categorie;
-      watch.disponible = req.body.disponible;
-      watch.prix = req.body.prix;
-      watch.taille = req.body.taille;
-      watch.mouvement = req.body.mouvement;
-      watch.garantie = req.body.garantie;
-      watch.limite = req.body.limite;
-      watch.etancheite = req.body.etancheite;
-      watch.glace = req.body.glace;
-      watch.boitier = req.body.boitier;
-      watch.traitement = req.body.traitement;
-      watch.cadran = req.body.cadran;
-      watch.lunette = req.body.lunette;
-      watch.poids = req.body.poids;
+      watch.marque = req.body.watch.marque;
+      watch.nom = req.body.watch.nom;
+      watch.quantite = req.body.watch.quantite;
+      watch.reference = req.body.watch.reference;
+      watch.annee = req.body.watch.annee;
+      watch.description = req.body.watch.description;
+      watch.categorie = req.body.watch.categorie;
+      watch.disponible = req.body.watch.disponible;
+      watch.prix = req.body.watch.prix;
+      watch.taille = req.body.watch.taille;
+      watch.mouvement = req.body.watch.mouvement;
+      watch.garantie = req.body.watch.garantie;
+      watch.limite = req.body.watch.limite;
+      watch.etancheite = req.body.watch.etancheite;
+      watch.glace = req.body.watch.glace;
+      watch.boitier = req.body.watch.boitier;
+      watch.traitement = req.body.watch.traitement;
+      watch.cadran = req.body.watch.cadran;
+      watch.lunette = req.body.watch.lunette;
+      watch.poids = req.body.watch.poids;
 
 
       // use MongoDB to save Watch object with any changes

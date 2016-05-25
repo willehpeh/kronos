@@ -113,9 +113,9 @@ html(ng-app='KronosDashboard')
       .right-half(style="width:30%;margin-left:10%")
         h2 Watches
         .onewatch(ng-repeat="watch in watchArray")
-          p {{watch.nom}}
+          p(id="{{watch._id}}") {{watch.nom}}
             span.fa.fa-edit(style="cursor:pointer;" ng-click="beginModifyWatch(watch._id)")
-            span.fa.fa-close
+            span.fa.fa-close(style="cursor:pointer;" ng-click="deleteWatch(watch._id)")
 
     script(src="/libs/jquery/dist/jquery.min.js")
     script(src="/libs/angular/angular.min.js")
