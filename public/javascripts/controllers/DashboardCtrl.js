@@ -1,6 +1,7 @@
 angular.module('KronosDashboard').controller('DashboardCtrl', DashboardCtrl);
 
-function DashboardCtrl($scope, AuthService, store, $window) {
+function DashboardCtrl($scope, AuthService, WatchService, store, $window, $timeout) {
+
   $scope.login = function() {
     var user = {username: $scope.username, password: $scope.password};
     AuthService.login(user).then(function(data) {
@@ -11,4 +12,42 @@ function DashboardCtrl($scope, AuthService, store, $window) {
       console.log(data);
     });
   }
+
+  $scope.addNewWatch = function() {
+    var watch = $scope.newWatch;
+    var token = store.get('token');
+    store.set('watchTemp', watch);
+    $scope.newWatch = {};
+    WatchService.newWatch(watch, token).then(function(data) {
+      console.log("Success!");
+      console.log(data);
+      $scope.newWatch = {};
+      $scope.watchmessage = "Watch successfully added!"
+      $timeout(function() {
+        $scope.watchmessage = "";
+      }, 5000);
+      getWatches();
+
+    }, function(data) {
+      console.log("Failure!");
+      console.log(data);
+      $scope.newWatch = store.get('watchTemp');
+      $scope.watchmessage = "Uh-oh, something went wrong!"
+    });
+  }
+
+  $scope.beginModifyWatch = function(id) {
+    WatchService.getWatch(id).then(function(data) {
+      console.log('Got the watch: ');
+      console.log(data);
+    });
+  }
+
+  var getWatches = function() {
+    WatchService.getWatches().then(function(data) {
+      console.log("getWatches Success!")
+      $scope.watchArray = data;
+    });
+  }
+  getWatches();
 }

@@ -8,7 +8,7 @@ var watchSchema = new mongoose.Schema({
   annee: String,
   description: String,
   categorie: String,
-  disponible: Boolean,
+  disponible: String,
   prix: String,
   taille: String,
   mouvement: String,
