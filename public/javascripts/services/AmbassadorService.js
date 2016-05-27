@@ -63,3 +63,4 @@ angular.module('KronosDashboard').factory('AmbassadorService', function Ambassad
     }
 
   }
+});

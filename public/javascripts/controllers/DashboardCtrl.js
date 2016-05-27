@@ -92,7 +92,29 @@ function DashboardCtrl(
     });
   }
 
+  var getAllCalendarElements = function() {
+    CalendarService.getCalendarElements().then(function(data) {
+      console.log("getAllCalendarElements Success!");
+      $scope.calendarElementArray = data;
+    }, function(data) {
+      console.log("getAllCalendarElements went wrong!");
+      console.log(data);
+    });
+  }
+
+  var getAllAmbassadors = function() {
+    AmbassadorService.getAmbassadors().then(function(data) {
+      console.log("getAllAmbassadors Success!");
+      $scope.ambassadortArray = data;
+    }, function(data) {
+      console.log("getAllAmbassadors went wrong!");
+      console.log(data);
+    });
+  }
+
   getWatches();
   getAllNews();
   getAllPressPhotos();
+  getAllCalendarElements();
+  getAllAmbassadors();
 }
