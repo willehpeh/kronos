@@ -32,6 +32,9 @@ function DeleteWatchCtrl(
         console.log("Success!");
         console.log(data);
         $uibModalInstance.close('Success!');
+      }, function(data) {
+        console.log("Failure!");
+        console.log(data);
       })
     }
 

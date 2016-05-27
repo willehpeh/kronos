@@ -1,4 +1,4 @@
-angular.module('KronosDashboard').factory('WatchService', function WatchService($http, $q) {
+angular.module('KronosDashboard').factory('WatchService', function WatchService($http, $q, $window) {
   return {
 
     newWatch: function(watch, token) {
@@ -33,6 +33,9 @@ angular.module('KronosDashboard').factory('WatchService', function WatchService(
       $http.put('/api/watch/' + id, {watch: watch, token: token}).then(function(data) {
         response = data.data;
         defer.resolve(response);
+      }, function(data) {
+        response = data;
+        defer.resolve(response);
       });
       return defer.promise;
     },
@@ -44,6 +47,10 @@ angular.module('KronosDashboard').factory('WatchService', function WatchService(
       $http.delete('/api/watch/' + id, {headers: {'x-access-token': token}}).then(function(data) {
         response = data.data;
         defer.resolve(response);
+      }, function(data) {
+        console.log('Uh-oh, it broke...')
+        response = data;
+        defer.reject(response);
       });
       return defer.promise;
     },
