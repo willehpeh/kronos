@@ -7,8 +7,18 @@ html(ng-app='KronosDashboard')
     link(rel="stylesheet" href="/stylesheets/main.min.css")
     script(src="//use.edgefonts.net/quicksand.js")
   body(ng-controller="DashboardCtrl")
-    h1 Dashboarfds
-    button.btn.btn-success(ng-click="openWatchModal()") Try me bitch!
+    h1 Dashboard
+    button.btn.btn-success(ng-click="openWatchModal()") Nouvelle montre
+    br
+    br
+    div(ng-repeat="watch in watchArray | orderBy: '-created_at'")
+      h3 {{watch.nom}}
+      span {{watch.prix}}
+      br
+      br
+      .edit-buttons
+        span.fa.fa-lg.fa-edit(ng-click="modifyWatchModal(watch._id)")
+        span.fa.fa-lg.fa-close(ng-click="deleteWatch(watch._id)")
 
     script(src="/libs/jquery/dist/jquery.min.js")
     script(src="/libs/angular/angular.min.js")
@@ -29,3 +39,4 @@ html(ng-app='KronosDashboard')
     script(src="/javascripts/services/AmbassadorService.js")
     script(src="/javascripts/controllers/DashboardCtrl.js")
     script(src="/javascripts/controllers/WatchModalCtrl.js")
+    script(src="/javascripts/controllers/ModifyWatchModalCtrl.js")

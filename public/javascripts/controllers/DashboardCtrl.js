@@ -24,6 +24,18 @@ function DashboardCtrl(
     });
   }
 
+  $scope.deleteWatch = function(id) {
+    var token = store.get('token');
+    $('#'+id).css({
+      'color': '#AAA'
+    });
+    WatchService.deleteWatch(id, token).then(function(data) {
+      console.log('Watch deleted.');
+      console.log(data);
+      getWatches();
+    })
+  }
+
   var getWatches = function() {
     WatchService.getWatches().then(function(data) {
       console.log("getWatches Success!");
@@ -76,11 +88,27 @@ function DashboardCtrl(
     $uibModal.open({
       animation: true,
       templateUrl: 'partials/_watch-modal.html',
-      controller: WatchModalCtrl,
-      size: 'lg'
+      controller: WatchModalCtrl
+    }).result.then(function() {
+      getWatches();
     });
   }
 
+  $scope.modifyWatchModal = function(id) {
+
+    $uibModal.open({
+      animation: true,
+      templateUrl: 'partials/_modify-watch-modal.html',
+      controller: ModifyWatchModalCtrl,
+      resolve: {
+        id: function() {
+          return id;
+        }
+      }
+    }).result.then(function() {
+      getWatches();
+    });
+  }
 
   getWatches();
   getAllNews();

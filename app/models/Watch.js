@@ -24,7 +24,8 @@ var watchSchema = new mongoose.Schema({
   photo_front: String,
   photo_back: String,
   photo_quarter: String,
-  extra_photos: [String]
+  extra_photos: [String],
+  created_at: {type: Date, default: Date.now}
 });
 
 module.exports = mongoose.model("Watch", watchSchema);

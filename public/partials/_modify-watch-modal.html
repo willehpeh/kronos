@@ -3,43 +3,43 @@
   <h3 class="modal-title">Nouvelle montre</h3>
 </div>
 <div class="modal-body">
-  <form name="newWatchForm" autocomplete="off">
+  <form name="watchToModifyForm" autocomplete="off">
     <div class="form-group">
       <label for="marque">Marque</label>
-      <select id="marque" name="marque" ng-model="newWatch.marque" required>
+      <select id="marque" name="marque" ng-model="watchToModify.marque" required>
         <option value="Helfer">Helfer</option>
       </select>
     </div>
     <div class="form-group">
       <label for="nom">Nom</label>
-      <input id="nom" type="text" ng-model="newWatch.nom" required autocomplete="off">
+      <input id="nom" type="text" ng-model="watchToModify.nom" required autocomplete="off">
     </div>
     <div class="form-group">
       <label for="quantite">Quantité</label>
-      <input id="quantite" type="number" ng-model="newWatch.quantite" required autocomplete="off">
+      <input id="quantite" type="number" ng-model="watchToModify.quantite" required autocomplete="off">
     </div>
     <div class="form-group">
       <label for="reference">Référence</label>
-      <input id="reference" type="text" ng-model="newWatch.reference" required autocomplete="off">
+      <input id="reference" type="text" ng-model="watchToModify.reference" required autocomplete="off">
     </div>
     <div class="form-group">
       <label for="annee">Année</label>
-      <input id="annee" type="text" ng-model="newWatch.annee" required autocomplete="off">
+      <input id="annee" type="text" ng-model="watchToModify.annee" required autocomplete="off">
     </div>
     <div class="form-group">
       <label for="description">Description</label>
-      <textarea id="description" class="form-control" name="description" rows="5" cols="30" ng-model="newWatch.description" autocomplete="off"></textarea>
+      <textarea id="description" class="form-control" name="description" rows="5" cols="30" ng-model="watchToModify.description" autocomplete="off"></textarea>
     </div>
     <div class="form-group">
       <label for="categorie">Catégorie</label>
-      <select name="categorie" id="categorie" ng-model="newWatch.categorie" required autocomplete="off">
+      <select name="categorie" id="categorie" ng-model="watchToModify.categorie" required autocomplete="off">
         <option value="Homme">Homme</option>
         <option value="Femme">Femme</option>
       </select>
     </div>
     <div class="form-group">
       <label for="disponible">Disponibilité</label>
-      <select name="disponible" id="disponible" ng-model="newWatch.disponible" required autocomplete="off">
+      <select name="disponible" id="disponible" ng-model="watchToModify.disponible" required autocomplete="off">
         <option value="Disponible">Disponible</option>
         <option value="Sur commande">Sur commande</option>
         <option value="Appel pour dispo">Appel pour disponibilité</option>
@@ -50,11 +50,11 @@
     </div>
     <div class="form-group">
       <label for="prix">Prix</label>
-      <input type="text" id="prix" ng-model="newWatch.prix" required autocomplete="off">
+      <input type="text" id="prix" ng-model="watchToModify.prix" required autocomplete="off">
     </div>
     <div class="form-group">
       <label for="taille">Taille</label>
-      <select name="taille" id="taille" ng-model="newWatch.taille" required autocomplete="off">
+      <select name="taille" id="taille" ng-model="watchToModify.taille" required autocomplete="off">
         <option value="40mm">40mm</option>
         <option value="45mm">45mm</option>
         <option value="47mm">47mm</option>
@@ -63,47 +63,47 @@
     </div>
     <div class="form-group">
       <label for="mouvement">Mouvement</label>
-      <input type="text" id="mouvement" ng-model="newWatch.mouvement" required autocomplete="off">
+      <input type="text" id="mouvement" ng-model="watchToModify.mouvement" required autocomplete="off">
     </div>
     <div class="form-group">
       <label for="garantie">Garantie</label>
-      <input type="text" id="garantie" ng-model="newWatch.garantie" required autocomplete="off">
+      <input type="text" id="garantie" ng-model="watchToModify.garantie" required autocomplete="off">
     </div>
     <div class="form-group">
       <label for="limite">Édition limitée</label>
-      <input type="text" id="limite" ng-model="newWatch.limite" required autocomplete="off">
+      <input type="text" id="limite" ng-model="watchToModify.limite" required autocomplete="off">
     </div>
     <div class="form-group">
       <label for="etancheite">Étanchéité</label>
-      <input type="text" id="etancheite" ng-model="newWatch.etancheite" required autocomplete="off">
+      <input type="text" id="etancheite" ng-model="watchToModify.etancheite" required autocomplete="off">
     </div>
     <div class="form-group">
       <label for="glace">Glace</label>
-      <input type="text" id="glace" ng-model="newWatch.glace" required autocomplete="off">
+      <input type="text" id="glace" ng-model="watchToModify.glace" required autocomplete="off">
     </div>
     <div class="form-group">
       <label for="boitier">Boitier</label>
-      <input type="text" id="boitier" ng-model="newWatch.boitier" required autocomplete="off">
+      <input type="text" id="boitier" ng-model="watchToModify.boitier" required autocomplete="off">
     </div>
     <div class="form-group">
       <label for="traitement">Traitement</label>
-      <input type="text" id="traitement" ng-model="newWatch.traitement" required autocomplete="off">
+      <input type="text" id="traitement" ng-model="watchToModify.traitement" required autocomplete="off">
     </div>
     <div class="form-group">
       <label for="cadran">Cadran</label>
-      <input type="text" id="cadran" ng-model="newWatch.cadran" required autocomplete="off">
+      <input type="text" id="cadran" ng-model="watchToModify.cadran" required autocomplete="off">
     </div>
     <div class="form-group">
       <label for="lunette">Lunette</label>
-      <input type="text" id="lunette" ng-model="newWatch.lunette" required autocomplete="off">
+      <input type="text" id="lunette" ng-model="watchToModify.lunette" required autocomplete="off">
     </div>
     <div class="form-group">
       <label for="poids">Poids</label>
-      <input type="text" id="poids" ng-model="newWatch.poids" required autocomplete="off">
+      <input type="text" id="poids" ng-model="watchToModify.poids" required autocomplete="off">
     </div>
   </form>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" id="add-button" ng-disabled="newWatchForm.$invalid" ng-click="addNewWatch()">Ajouter</button>
+    <button class="btn btn-primary" type="button" id="add-button" ng-disabled="watchToModifyForm.$invalid" ng-click="saveChanges(watchToModify._id)">Enregistrer modifications</button>
     <button class="btn btn-warning" type="button" ng-click="cancel()">Annuler</button>
 </div>
