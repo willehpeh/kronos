@@ -8,17 +8,39 @@ html(ng-app='KronosDashboard')
     script(src="//use.edgefonts.net/quicksand.js")
   body(ng-controller="DashboardCtrl")
     h1 Dashboard
-    button.btn.btn-success(ng-click="openWatchModal()") Nouvelle montre
-    br
-    br
-    div(ng-repeat="watch in watchArray | orderBy: '-created_at'")
-      h3 {{watch.nom}}
-      span {{watch.prix}}
-      br
-      br
-      .edit-buttons
-        span.fa.fa-lg.fa-edit(ng-click="modifyWatchModal(watch._id)")
-        span.fa.fa-lg.fa-close(ng-click="deleteWatch(watch._id)")
+    ul.nav.nav-tabs#dashboard-tabs
+      li(role="presentation" class="active")
+        a(href="#montres") Montres
+      li(role="presentation")
+        a(href="#news") News
+      li(role="presentation")
+        a(href="#calendrier") Calendrier
+      li(role="presentation")
+        a(href="#presse") Presse
+      li(role="presentation")
+        a(href="#ambassadeurs") Ambassadeurs
+    .tab-content
+      .tab-pane.active#montres(role="tabpanel")
+        h2 Montres
+        button.btn.btn-success(ng-click="openWatchModal()") Nouvelle montre
+        br
+        br
+        div.watch(ng-repeat="watch in watchArray | orderBy: '-created_at'" ng-class-even="'even'" ng-class-odd="'odd'")
+          h3 {{watch.nom}}
+          span {{watch.prix}}
+          br
+          br
+          .edit-buttons
+            span.fa.fa-lg.fa-edit(ng-click="modifyWatchModal(watch._id)")
+            span.fa.fa-lg.fa-close(ng-click="deleteWatch(watch._id)")
+      .tab-pane#news(role="tabpanel")
+        h2 News
+      .tab-pane#calendrier(role="tabpanel")
+        h2 Calendrier
+      .tab-pane#presse(role="tabpanel")
+        h2 Presse
+      .tab-pane#ambassadeurs(role="tabpanel")
+        h2 Ambassadeurs
 
     script(src="/libs/jquery/dist/jquery.min.js")
     script(src="/libs/angular/angular.min.js")
@@ -31,5 +53,8 @@ html(ng-app='KronosDashboard')
     script(src="/libs/angular-bootstrap/ui-bootstrap-tpls.min.js")
     script(src="/libs/angular-touch/angular-touch.min.js")
     script(src="/javascripts/app.js")
+    script(src="/javascripts/functions.js")
     script(src="/javascripts/services/service-bundle.js")
-    script(src="/javascripts/controllers/controller-bundle.js")
+    script(src="/javascripts/controllers/DashboardCtrl.js")
+    script(src="/javascripts/controllers/ModifyWatchModalCtrl.js")
+    script(src="/javascripts/controllers/WatchModalCtrl.js")

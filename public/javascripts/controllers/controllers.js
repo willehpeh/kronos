@@ -1,3 +1,3 @@
-var dashboard = require('./DashboardCtrl');
-var modifyWatchModal = require('./ModifyWatchModalCtrl');
-var watchModal = require('./WatchModalCtrl');
+require('./ModifyWatchModalCtrl');
+require('./WatchModalCtrl');
+require('./DashboardCtrl');

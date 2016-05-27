@@ -205,8 +205,8 @@ function WatchModalCtrl(
   }
 
 },{}],4:[function(require,module,exports){
-var dashboard = require('./DashboardCtrl');
-var modifyWatchModal = require('./ModifyWatchModalCtrl');
-var watchModal = require('./WatchModalCtrl');
+require('./ModifyWatchModalCtrl');
+require('./WatchModalCtrl');
+require('./DashboardCtrl');
 
 },{"./DashboardCtrl":1,"./ModifyWatchModalCtrl":2,"./WatchModalCtrl":3}]},{},[4]);
