@@ -7,6 +7,7 @@ function DashboardCtrl(
   NewsService,
   PressPhotoService,
   CalendarService,
+  AmbassadorService,
   store,
   $window,
   $timeout) {

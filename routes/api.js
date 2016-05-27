@@ -7,6 +7,7 @@ var User = require('../app/models/user');
 var PressPhoto = require('../app/models/pressphoto');
 var NewsPost = require('../app/models/newspost');
 var CalendarElement = require('../app/models/calendarelement');
+var Ambassador = require('../app/models/ambassador');
 
 var path = require('path');
 
@@ -851,5 +852,83 @@ router.route('/pressphoto/:id/add-image')
       });
     });
   });
+
+// ================================================================================================
+
+//                  AMBASSADOR
+
+// ================================================================================================
+
+router.route('/ambassador')
+// ALL AMBASSADOR ::: GET
+  .get(function(req, res) {
+    Ambassador.find(function(err, data) {
+      if(err) {
+        res.status(500).send(err);
+      }
+      res.send(data);
+    });
+  })
+// SPECIFIC AMBASSADOR ::: POST
+  .post(tokenMiddleware, function(req, res) {
+    if(!req.body.admin) {
+      return res.status(401).send("You do not have admin privileges.")
+    }
+    var ambassador = new Ambassador();
+
+    ambassador.name = req.body.ambassador.name;
+    ambassador.description = req.body.ambassador.description;
+
+    ambassador.save(function(err, ambassador) {
+      if(err) {
+        return res.status(500).send(err);
+      }
+      return res.send(ambassador);
+    });
+  })
+
+router.route('/ambassador/:id')
+// SPECIFIC AMBASSADOR ::: GET
+  .get(function(req, res) {
+    Ambassador.findById(req.params.id, function(err, ambassador) {
+      if(err) {
+        res.status(500).send(err);
+      }
+      res.send(ambassador);
+    });
+  })
+// SPECIFIC PRESSPHOTO ::: PUT
+  .put(tokenMiddleware, function(req, res) {
+    if(!req.body.admin) {
+      return res.status(401).send("You do not have admin privileges.")
+    }
+      Ambassador.findById(req.params.id, function(err, ambassador) {
+      if(err) {
+        res.status(500).send(err);
+      }
+
+      ambassador.name = req.body.ambassador.name;
+      ambassador.description = req.body.ambassador.description;
+
+      ambassador.save(function(err, ambassador) {
+        if(err) {
+          return res.status(500).send(err);
+        }
+          return res.send(ambassador);
+      });
+    })
+  })
+// SPECIFIC AMBASSADOR ::: DELETE
+  .delete(tokenMiddleware, function(req, res) {
+    if(!req.body.admin) {
+      return res.status(401).send("You do not have admin privileges.")
+    }
+    Ambassador.remove({_id: req.params.id}, function(err) {
+      if(err) {
+        res.status(500).send(err);
+      }
+      res.status(200).send("Ambassador removed.");
+    });
+  })
 
 module.exports = router;
