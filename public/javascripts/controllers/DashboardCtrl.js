@@ -13,7 +13,15 @@ function DashboardCtrl(
   $timeout,
   $uibModal) {
 
+// ==============================================================================
+
+//                        LOGIN FUNCTION
+
+// ==============================================================================
+
+
   $scope.login = function() {
+  // login function calls AuthService login on username and password entered in login screen
     var user = {username: $scope.username, password: $scope.password};
     AuthService.login(user).then(function(data) {
       console.log(data);
@@ -24,19 +32,14 @@ function DashboardCtrl(
     });
   }
 
-  $scope.deleteWatch = function(id) {
-    var token = store.get('token');
-    $('#'+id).css({
-      'color': '#AAA'
-    });
-    WatchService.deleteWatch(id, token).then(function(data) {
-      console.log('Watch deleted.');
-      console.log(data);
-      getWatches();
-    })
-  }
+// ==============================================================================
+
+//                        "GET ALL" FUNCTIONS
+
+// ==============================================================================
 
   var getWatches = function() {
+  // attributes all watches to watchArray
     WatchService.getWatches().then(function(data) {
       console.log("getWatches Success!");
       $scope.watchArray = data;
@@ -44,6 +47,7 @@ function DashboardCtrl(
   }
 
   var getAllNews = function() {
+  // attributes all news posts to newsArray
     NewsService.getNewsPosts().then(function(data) {
       console.log("getNews Success!");
       $scope.newsArray = data;
@@ -54,6 +58,7 @@ function DashboardCtrl(
   }
 
   var getAllPressPhotos = function() {
+  // attributes all press photos to pressPhotoArray
     PressPhotoService.getPressPhotos().then(function(data) {
       console.log("getPressPhotos Success!");
       $scope.pressPhotoArray = data;
@@ -64,6 +69,7 @@ function DashboardCtrl(
   }
 
   var getAllCalendarElements = function() {
+  // attributes all calendar elements to calendarElementArray
     CalendarService.getCalendarElements().then(function(data) {
       console.log("getAllCalendarElements Success!");
       $scope.calendarElementArray = data;
@@ -74,57 +80,129 @@ function DashboardCtrl(
   }
 
   var getAllAmbassadors = function() {
+  // attributes all ambassadors to ambassadorArray
     AmbassadorService.getAmbassadors().then(function(data) {
       console.log("getAllAmbassadors Success!");
-      $scope.ambassadortArray = data;
+      $scope.ambassadorArray = data;
     }, function(data) {
       console.log("getAllAmbassadors went wrong!");
       console.log(data);
     });
   }
 
-  $scope.openWatchModal = function() {
+// ==============================================================================
 
+//                        WATCH MODAL FUNCTIONS
+
+// ==============================================================================
+
+  $scope.openWatchModal = function() {
+  // opens modal screen allowing to add new Watch objects
     $uibModal.open({
       animation: true,
       templateUrl: 'partials/_watch-modal.html',
       controller: WatchModalCtrl
     }).result.then(function() {
+    // renew watch list to show changes
       getWatches();
     });
   }
 
   $scope.modifyWatchModal = function(id) {
-
+  // opens modan screen allowing to modify chosen Watch object
     $uibModal.open({
       animation: true,
       templateUrl: 'partials/_modify-watch-modal.html',
       controller: ModifyWatchModalCtrl,
+    // sends id to modal
       resolve: {
         id: function() {
           return id;
         }
       }
     }).result.then(function() {
+    // renew watch list to show changes
       getWatches();
     });
   }
 
   $scope.deleteWatchModal = function(id) {
-
+  // opens modal screen allowing to delete chosen Watch object
     $uibModal.open({
       animation: true,
       templateUrl: 'partials/_delete-watch-modal.html',
       controller: DeleteWatchCtrl,
+    // sends id to modal
       resolve: {
         id: function() {
           return id;
         }
       }
     }).result.then(function() {
+    // renew watch list to show changes
       getWatches();
     });
   }
+
+// ==============================================================================
+
+//                        NEWS MODAL FUNCTIONS
+
+// ==============================================================================
+
+$scope.openNewsModal = function() {
+// opens modal screen allowing to add new Watch objects
+  $uibModal.open({
+    animation: true,
+    templateUrl: 'partials/_news-modal.html',
+    controller: NewsModalCtrl
+  }).result.then(function() {
+  // renew watch list to show changes
+    getAllNews();
+  });
+}
+
+$scope.modifyNewsModal = function(id) {
+// opens modan screen allowing to modify chosen Watch object
+  $uibModal.open({
+    animation: true,
+    templateUrl: 'partials/_modify-news-modal.html',
+    controller: ModifyNewsModalCtrl,
+  // sends id to modal
+    resolve: {
+      id: function() {
+        return id;
+      }
+    }
+  }).result.then(function() {
+  // renew watch list to show changes
+    getAllNews();
+  });
+}
+
+$scope.deleteNewsModal = function(id) {
+// opens modal screen allowing to delete chosen Watch object
+  $uibModal.open({
+    animation: true,
+    templateUrl: 'partials/_delete-news-modal.html',
+    controller: DeleteNewsCtrl,
+  // sends id to modal
+    resolve: {
+      id: function() {
+        return id;
+      }
+    }
+  }).result.then(function() {
+  // renew watch list to show changes
+    getAllNews();
+  });
+}
+
+// ==============================================================================
+
+//                        RUN 'GET ALL' FUNCTIONS
+
+// ==============================================================================
 
   getWatches();
   getAllNews();

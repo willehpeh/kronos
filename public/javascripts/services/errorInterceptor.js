@@ -1,7 +1,6 @@
 angular.module('KronosDashboard').factory('errorInterceptor', function errorInterceptor($q, $rootScope, $window) {
   return {
     response: function(response) {
-      console.log('Positive response.')
       response.data.status = response.status;
       return response;
     },

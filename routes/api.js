@@ -474,7 +474,6 @@ router.route('/newspost')
 
     newspost.text = req.body.newspost.text;
     newspost.title = req.body.newspost.title;
-    newspost.date = req.body.newspost.date;
 
     newspost.save(function(err, newspost) {
       if(err) {
@@ -501,19 +500,21 @@ router.route('/newspost/:id')
     }
     NewsPost.findById(req.params.id, function(err, newspost) {
       if(err) {
-        res.status(500).send(err);
+        return res.status(500).send(err);
       }
+      if(!newspost) {
+        return res.status(500).send(err);
+      } else {
+        newspost.text = req.body.newspost.text;
+        newspost.title = req.body.newspost.title;
 
-      newspost.text = req.body.newspost.text;
-      newspost.title = req.body.newspost.title;
-      newspost.date = req.body.newspost.date;
-
-      newspost.save(function(err, newspost) {
-        if(err) {
-          return res.status(500).send(err);
-        }
-        return res.send(newspost);
-      });
+        newspost.save(function(err, newspost) {
+          if(err) {
+            return res.status(500).send(err);
+          }
+          return res.send(newspost);
+        });
+      }
     })
   })
 // SPECIFIC NEWSPOST ::: DELETE
@@ -593,6 +594,7 @@ router.route('/calendarelement')
     var calendarelement = new CalendarElement();
 
     calendarelement.text = req.body.element.text;
+    calendarelement.title = req.body.element.title;
     calendarelement.time = req.body.element.time;
     calendarelement.day = req.body.element.day;
     calendarelement.month = req.body.element.month;
@@ -628,6 +630,7 @@ router.route('/calendarelement/:id')
       }
 
       calendarelement.text = req.body.element.text;
+      calendarelement.title = req.body.element.title;
       calendarelement.time = req.body.element.time;
       calendarelement.day = req.body.element.day;
       calendarelement.month = req.body.element.month;

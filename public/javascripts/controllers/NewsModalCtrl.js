@@ -1,25 +1,24 @@
-angular.module('KronosDashboard').controller('WatchModalCtrl', WatchModalCtrl);
+angular.module('KronosDashboard').controller('NewsModalCtrl', NewsModalCtrl);
 
-function WatchModalCtrl(
+function NewsModalCtrl(
   $scope,
-  WatchService,
+  NewsService,
   store,
   $window,
   $timeout,
   $uibModal,
   $uibModalInstance) {
 
-    $scope.addNewWatch = function() {
-      var watch = $scope.newWatch;
+    $scope.addNewPost = function() {
+      var post = $scope.newPost;
       var token = store.get('token');
-      store.set('watchTemp', watch);
       $('#add-button').text('');
       $('#add-button').add('span');
       $('#add-button').children().addClass('fa fa-lg fa-spin fa-spinner');
-      WatchService.newWatch(watch, token).then(function(data) {
+      NewsService.newNewsPost(post, token).then(function(data) {
         console.log("Success!");
         console.log(data);
-        $scope.newWatch = {};
+        $scope.newPost = {};
         $uibModalInstance.close('Success!');
 
       }, function(data) {
@@ -29,9 +28,8 @@ function WatchModalCtrl(
       });
     }
 
-    
-
     $scope.cancel = function() {
       $uibModalInstance.dismiss('cancel');
     }
+
   }

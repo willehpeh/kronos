@@ -1,0 +1,12 @@
+h2 Ambassadeurs
+button.btn.btn-success(ng-click="openAmbassadorModal()") Nouvel ambassadeur
+br
+br
+div.ambassador(ng-repeat="ambassador in ambassadorArray | orderBy: '-created_at'" ng-class-even="'even'" ng-class-odd="'odd'")
+  h3 {{ambassador.name}}
+  span {{ambassador.description}}
+  br
+  br
+  .edit-buttons
+    span.fa.fa-2x.fa-edit(ng-click="modifyAmbassadorModal(ambassador._id)")
+    span.fa.fa-2x.fa-close(ng-click="deleteAmbassadorModal(ambassador._id)")

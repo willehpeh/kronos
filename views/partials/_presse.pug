@@ -1,0 +1,12 @@
+h2 Presse
+button.btn.btn-success(ng-click="openPressModal()") Nouvelle photo
+br
+br
+div.pressphoto(ng-repeat="pressphoto in pressPhotoArray | orderBy: '-created_at'" ng-class-even="'even'" ng-class-odd="'odd'")
+  h3 {{pressphoto.title}}
+  span {{pressphoto.caption}}
+  br
+  br
+  .edit-buttons
+    span.fa.fa-2x.fa-edit(ng-click="modifyPressModal(pressphoto._id)")
+    span.fa.fa-2x.fa-close(ng-click="deletePressModal(pressphoto._id)")
