@@ -1,2 +1,2 @@
-body{padding:20px 5%}.watch{padding:20px}.watch h3{margin-top:0px}.watch.odd{background-color:#fafafa}.watch.even{background-color:#ebebeb}
+body{padding:20px 5%}.watch{position:relative;padding:20px}.watch h3{margin-top:0px}.watch.odd{background-color:#fafafa}.watch.even{background-color:#ebebeb}.edit-buttons{position:absolute;top:20px;right:20px}.edit-buttons span{margin-right:10px;cursor:pointer}.edit-buttons span:hover{color:#AAA}
 /*# sourceMappingURL=main.min.css.map */

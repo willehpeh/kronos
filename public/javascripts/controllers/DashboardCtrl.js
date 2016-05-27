@@ -110,6 +110,22 @@ function DashboardCtrl(
     });
   }
 
+  $scope.deleteWatchModal = function(id) {
+
+    $uibModal.open({
+      animation: true,
+      templateUrl: 'partials/_delete-watch-modal.html',
+      controller: DeleteWatchCtrl,
+      resolve: {
+        id: function() {
+          return id;
+        }
+      }
+    }).result.then(function() {
+      getWatches();
+    });
+  }
+
   getWatches();
   getAllNews();
   getAllPressPhotos();

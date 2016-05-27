@@ -31,8 +31,8 @@ html(ng-app='KronosDashboard')
           br
           br
           .edit-buttons
-            span.fa.fa-lg.fa-edit(ng-click="modifyWatchModal(watch._id)")
-            span.fa.fa-lg.fa-close(ng-click="deleteWatch(watch._id)")
+            span.fa.fa-2x.fa-edit(ng-click="modifyWatchModal(watch._id)")
+            span.fa.fa-2x.fa-close(ng-click="deleteWatchModal(watch._id)")
       .tab-pane#news(role="tabpanel")
         h2 News
       .tab-pane#calendrier(role="tabpanel")
@@ -58,3 +58,4 @@ html(ng-app='KronosDashboard')
     script(src="/javascripts/controllers/DashboardCtrl.js")
     script(src="/javascripts/controllers/ModifyWatchModalCtrl.js")
     script(src="/javascripts/controllers/WatchModalCtrl.js")
+    script(src="/javascripts/controllers/DeleteWatchCtrl.js")
