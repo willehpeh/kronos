@@ -7,8 +7,10 @@
     "animate.css": "latest",
     "angular": "latest",
     "angular-route": "latest",
-    "angular-animate": "^1.5.0",
+    "angular-animate": "latest",
     "a0-angular-storage": "latest",
-    "angular-ui-router": "^0.3.0"
+    "angular-ui-router": "latest",
+    "angular-bootstrap": "latest",
+    "angular-touch": "^1.5.5"
   }
 }
