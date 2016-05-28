@@ -4,7 +4,18 @@ br
 br
 div.post(ng-repeat="post in newsArray | orderBy: '-created_at'" ng-class-even="'even'" ng-class-odd="'odd'")
   h3 {{post.title}}
+  .news-images
+    .news-image(ng-repeat="image in post.photos")
+      img(ng-src="{{image}}" width="160px")
+      button.btn.btn-danger.btn-sm(ng-click="deleteNewsPhoto(post._id, image)") Supprimer
   p {{post.text}}
+  button.btn.btn-primary.btn-sm(
+            ngf-select="uploadImage(post._id, '/api/newspost/add-image/', $file)"
+            ngf-pattern="'image/*'"
+            ngf-accept="'image/*'"
+            ngf-resize-if="$width > 1000 || $height > 800"
+            ngf-resize="{width: 1000, height: 800, quality: .9, centerCrop: false}"
+            ) Ajouter une image
   br
   br
   .edit-buttons

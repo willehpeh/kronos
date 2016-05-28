@@ -448,6 +448,38 @@ router.route('/watch/add-extra-image/:id')
     });
   });
 
+  router.route('/watch/rem-front-image/:id')
+  .delete(tokenMiddleware, function(req, res, next) {
+    if(!req.params.id) {
+      return res.status(400).send({message: "Bad request."});
+    }
+    var id = req.params.id;
+
+    Watch.findById(id, function(err, watch) {
+      if(err) {
+        return res.status(500).send(err);
+      }
+      var front_photo_address = watch.front_photo;
+      watch.front_photo = "";
+      console.log("Photo removed.");
+      watch.save(function(err, watch) {
+        if(err) {
+          return res.status(500).send(err);
+        }
+        console.log("Watch saved.");
+        var photoToDelete = path.join(__dirname, "../public" + photo);
+
+        fs.remove(photoToDelete, function (err) {
+          if(err) {
+            return res.status(500).send(err);
+          }
+          console.log("Photo deleted.");
+          return res.status(200).send({message: "Request complete."});
+        });
+      });
+    });
+  });
+
 // ================================================================================================
 
 //                  NEWSPOST
@@ -567,6 +599,49 @@ router.route('/newspost/add-image/:id')
       });
     });
   });
+router.route('/newspost/rem-image/:id/:photo')
+.delete(tokenMiddleware, function(req, res, next) {
+  if(!req.params.id || !req.params.photo) {
+    return res.status(400).send({message: "Bad request."});
+  }
+  var id = req.params.id;
+  var photo = "/images/newsposts/" + req.params.photo;
+  console.log(photo);
+
+  NewsPost.findById(id, function(err, newspost) {
+    if(err) {
+      console.log('Could not find by ID: ' + id);
+      return res.status(500).send(err);
+    }
+
+    var photoPositionInArray = newspost.photos.indexOf(photo);
+
+    if(photoPositionInArray >= 0) {
+      console.log("Photo is in position " + photoPositionInArray);
+      newspost.photos.splice(photoPositionInArray, 1);
+      console.log("Photo removed from array.");
+      newspost.save(function(err, newspost) {
+        if(err) {
+          return res.status(500).send(err);
+        }
+        console.log("NewsPost saved.");
+
+        var photoToDelete = path.join(__dirname, "../public" + photo);
+
+        fs.remove(photoToDelete, function (err) {
+          if(err) {
+            return res.status(500).send(err);
+          }
+          console.log("Photo deleted.");
+          return res.status(200).send({message: "Request complete."});
+        });
+      });
+    }
+    else {
+      return res.status(500).send({message: "Could not find photo in array."});
+    }
+  });
+});
 
 
 // ================================================================================================

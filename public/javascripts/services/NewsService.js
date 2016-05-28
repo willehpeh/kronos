@@ -60,7 +60,24 @@ angular.module('KronosDashboard').factory('NewsService', function NewsService($h
       $http.delete('/api/newspost/' + id, {headers: {'x-access-token': token}}).then(function(data) {
         response = data.data;
         defer.resolve(response);
-      })
+      });
+
+      return defer.promise;
+    },
+
+    deleteNewsPhoto: function(id, photo, token) {
+      var response = {};
+      var defer = $q.defer();
+
+      var photo = photo.slice(18);
+
+      console.log("ID is: " + id);
+
+      $http.delete('/api/newspost/rem-image/'+ id + '/' + photo,
+      {headers: {'x-access-token': token}}).then(function(data) {
+        response = data.data;
+        defer.resolve(response);
+      });
 
       return defer.promise;
     }

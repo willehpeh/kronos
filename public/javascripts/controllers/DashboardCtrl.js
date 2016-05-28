@@ -11,7 +11,8 @@ function DashboardCtrl(
   store,
   $window,
   $timeout,
-  $uibModal) {
+  $uibModal,
+  Upload) {
 
 // ==============================================================================
 
@@ -48,12 +49,28 @@ $scope.uploadImage = function(id, url, file) {
     url: url + id,
     data: {file: file}
   }).then(function() {
-    getAllNews();
+    getEverything();
   }, function(err) {
     console.log('Upload failure.');
     console.log(err);
   }, function(evt) {
     $scope.progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+    console.log(progressPercentage);
+  });
+}
+
+// ==============================================================================
+
+//                        IMAGE DELETE FUNCTIONS
+
+// ==============================================================================
+
+$scope.deleteNewsPhoto = function(id, photo) {
+  var token = store.get('token');
+  NewsService.deleteNewsPhoto(id, photo, token).then(function(data) {
+    console.log("Success.")
+    console.log(data);
+    getAllNews();
   });
 }
 
@@ -113,6 +130,14 @@ $scope.uploadImage = function(id, url, file) {
       console.log("getAllAmbassadors went wrong!");
       console.log(data);
     });
+  }
+
+  var getEverything = function() {
+    getWatches();
+    getAllNews();
+    getAllPressPhotos();
+    getAllCalendarElements();
+    getAllAmbassadors();
   }
 
 // ==============================================================================
@@ -391,9 +416,5 @@ $scope.deleteCalendarModal = function(id) {
 
 // ==============================================================================
 
-  getWatches();
-  getAllNews();
-  getAllPressPhotos();
-  getAllCalendarElements();
-  getAllAmbassadors();
+  getEverything();
 }
