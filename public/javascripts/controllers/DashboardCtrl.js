@@ -200,6 +200,60 @@ $scope.deleteNewsModal = function(id) {
 
 // ==============================================================================
 
+//                        AMBASSADOR MODAL FUNCTIONS
+
+// ==============================================================================
+
+$scope.openAmbassadorModal = function() {
+// opens modal screen allowing to add new Watch objects
+  $uibModal.open({
+    animation: true,
+    templateUrl: 'partials/_ambassador-modal.html',
+    controller: AmbassadorModalCtrl
+  }).result.then(function() {
+  // renew watch list to show changes
+    getAllAmbassadors();
+  });
+}
+
+$scope.modifyAmbassadorModal = function(id) {
+// opens modan screen allowing to modify chosen Watch object
+  $uibModal.open({
+    animation: true,
+    templateUrl: 'partials/_modify-ambassador-modal.html',
+    controller: ModifyAmbassadorModalCtrl,
+  // sends id to modal
+    resolve: {
+      id: function() {
+        return id;
+      }
+    }
+  }).result.then(function() {
+  // renew watch list to show changes
+    getAllAmbassadors();
+  });
+}
+
+$scope.deleteAmbassadorModal = function(id) {
+// opens modal screen allowing to delete chosen Watch object
+  $uibModal.open({
+    animation: true,
+    templateUrl: 'partials/_delete-ambassador-modal.html',
+    controller: DeleteAmbassadorCtrl,
+  // sends id to modal
+    resolve: {
+      id: function() {
+        return id;
+      }
+    }
+  }).result.then(function() {
+  // renew watch list to show changes
+    getAllAmbassadors();
+  });
+}
+
+// ==============================================================================
+
 //                        RUN 'GET ALL' FUNCTIONS
 
 // ==============================================================================

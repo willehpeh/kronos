@@ -1,0 +1,19 @@
+<div class="modal-header">
+  <h3 class="modal-title">Nouvel ambassadeur</h3>
+</div>
+<div class="modal-body">
+  <form name="newAmbassadorForm" autocomplete="off">
+    <div class="form-group">
+      <label for="name">Nom</label>
+      <input type="text" id="name" ng-model="newAmbassador.name" required autocomplete="off">
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea name="description" id="description" class="form-control" rows="10" ng-model="newAmbassador.description" required autocomplete="off"></textarea>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" id="add-button" ng-disabled="newAmbassadorForm.$invalid" ng-click="addNewAmbassador()">Ajouter</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Annuler</button>
+</div>

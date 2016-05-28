@@ -4,7 +4,7 @@ br
 br
 div.post(ng-repeat="post in newsArray | orderBy: '-created_at'" ng-class-even="'even'" ng-class-odd="'odd'")
   h3 {{post.title}}
-  span {{post.text}}
+  p {{post.text}}
   br
   br
   .edit-buttons

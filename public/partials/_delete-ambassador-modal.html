@@ -1,0 +1,13 @@
+<div class="modal-header">
+  <h3 class="modal-title">Supprimer montre</h3>
+</div>
+<div class="modal-body">
+  <p>Êtes-vous sûr de vouloir supprimer l'ambassadeur :</p>
+  <h3>{{ambassador.name}}</h3>
+  <p>ATTENTION : cette action ne peut être annulée
+
+</div>
+<div class="modal-footer">
+    <button class="btn btn-danger" type="button" id="delete-button" ng-click="confirmDeleteAmbassador(ambassador._id)">Supprimer</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Annuler</button>
+</div>

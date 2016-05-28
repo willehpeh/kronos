@@ -1,0 +1,19 @@
+<div class="modal-header">
+  <h3 class="modal-title">Modifer ambassadeur</h3>
+</div>
+<div class="modal-body">
+  <form name="ambassadorToModifyForm" autocomplete="off">
+    <div class="form-group">
+      <label for="name">Nom</label>
+      <input type="text" id="name" ng-model="ambassadorToModify.name" required autocomplete="off">
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea class="form-control" ng-model="ambassadorToModify.description" name="description" id="description" rows="5" required autocomplete="off"></textarea>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" id="add-button" ng-disabled="ambassadorToModifyForm.$invalid" ng-click="saveChanges(ambassadorToModify._id)">Enregistrer modifications</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Annuler</button>
+</div>
