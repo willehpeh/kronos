@@ -12,11 +12,48 @@ body
   &.even
     background-color: rgba(235, 235, 235, 1)
 
-.news-images
+.news-images, .watch-images
   display: flex
   align-items: center
   flex-wrap: wrap
   padding: 20px 0px
+
+.watch-blank
+  position: relative
+  width: 100px
+  height: 100px
+  border: thin solid #BBB
+  border-style: dashed
+  margin-right: 10px
+  cursor: pointer
+  &:hover .watch-image-description
+    background-color: #999
+.watch-image-description
+  position: absolute
+  width: 100%
+  bottom: 0px
+  left: 0px
+  background-color: #555
+  color: #BBB
+  text-align: center
+  font-size: 0.9em
+
+.plus-sign
+  color: #BBB
+  font-size: 2em
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+
+.watch-image
+  position: relative
+  width: 100px
+  height: 100px
+  img
+    width: 100px
+    height: 100px
+
 
 .news-image
   position: relative

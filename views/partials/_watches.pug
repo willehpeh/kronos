@@ -4,7 +4,37 @@ br
 br
 div.watch(ng-repeat="watch in watchArray | orderBy: '-created_at'" ng-class-even="'even'" ng-class-odd="'odd'")
   h3 {{watch.nom}}
-  span {{watch.prix}}
+  .watch-images
+    .watch-blank(ng-if="watch.photo_front === '' || !watch.photo_front")
+      span.plus-sign +
+      .watch-image-description
+        span Avant
+    .watch-image(ng-if="watch.photo_front !== '' && watch.photo_front")
+      img(ng-src="{{watch.photo_front}}")
+      .watch-image-description
+        span Avant
+    .watch-blank(ng-if="watch.photo_back === '' || !watch.photo_back")
+      span.plus-sign +
+      .watch-image-description
+        span Arrière
+    .watch-image(ng-if="watch.photo_back !== '' && watch.photo_back")
+      img(ng-src="{{watch.photo_back}}")
+      .watch-image-description
+        span Arrière
+    .watch-blank(ng-if="watch.photo_quarter === '' || !watch.photo_quarter")
+      span.plus-sign +
+      .watch-image-description
+        span Trois-quarts
+    .watch-image(ng-if="watch.photo_quarter !== '' && watch.photo_quarter")
+      img(ng-src="{{watch.photo_quarter}}")
+      .watch-image-description
+        span Trois-quarts
+    .watch-image(ng-if="watch.extra_photos.length > 0 && watch.extra_photos[0] !== ''" ng-repeat="photo in watch.extra_photos")
+      img(ng-src="{{photo}}")
+    .watch-blank
+      span.plus-sign +
+      .watch-image-description
+        span Autre
   br
   br
   .edit-buttons
