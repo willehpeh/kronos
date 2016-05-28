@@ -48,12 +48,21 @@ body
 
 .watch-image
   position: relative
+  margin-right: 10px
   width: 100px
   height: 100px
   img
-    width: 100px
-    height: 100px
+    max-width: 100px
+    max-height: 100px
 
+.watch-image-delete
+  position: absolute
+  top: 0px
+  right: 0px
+  color: red
+  cursor: pointer
+  &:hover
+    color: lighten(red, 30%)
 
 .news-image
   position: relative

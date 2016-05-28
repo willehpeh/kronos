@@ -5,7 +5,12 @@ br
 div.watch(ng-repeat="watch in watchArray | orderBy: '-created_at'" ng-class-even="'even'" ng-class-odd="'odd'")
   h3 {{watch.nom}}
   .watch-images
-    .watch-blank(ng-if="watch.photo_front === '' || !watch.photo_front")
+    .watch-blank(ng-if="watch.photo_front === '' || !watch.photo_front"
+    ngf-select="uploadImage(watch._id, '/api/watch/add-front-image/', $file)"
+    ngf-pattern="'image/*'"
+    ngf-accept="'image/*'"
+    ngf-resize-if="$width > 1000 || $height > 800"
+    ngf-resize="{width: 1000, height: 800, quality: .9, centerCrop: false}")
       span.plus-sign +
       .watch-image-description
         span Avant
@@ -13,7 +18,14 @@ div.watch(ng-repeat="watch in watchArray | orderBy: '-created_at'" ng-class-even
       img(ng-src="{{watch.photo_front}}")
       .watch-image-description
         span Avant
-    .watch-blank(ng-if="watch.photo_back === '' || !watch.photo_back")
+      .watch-image-delete
+        span.fa.fa-close(ng-click="deleteFrontPhoto(watch._id)")
+    .watch-blank(ng-if="watch.photo_back === '' || !watch.photo_back"
+    ngf-select="uploadImage(watch._id, '/api/watch/add-back-image/', $file)"
+    ngf-pattern="'image/*'"
+    ngf-accept="'image/*'"
+    ngf-resize-if="$width > 1000 || $height > 800"
+    ngf-resize="{width: 1000, height: 800, quality: .9, centerCrop: false}")
       span.plus-sign +
       .watch-image-description
         span Arrière
@@ -21,7 +33,12 @@ div.watch(ng-repeat="watch in watchArray | orderBy: '-created_at'" ng-class-even
       img(ng-src="{{watch.photo_back}}")
       .watch-image-description
         span Arrière
-    .watch-blank(ng-if="watch.photo_quarter === '' || !watch.photo_quarter")
+    .watch-blank(ng-if="watch.photo_quarter === '' || !watch.photo_quarter"
+    ngf-select="uploadImage(watch._id, '/api/watch/add-quarter-image/', $file)"
+    ngf-pattern="'image/*'"
+    ngf-accept="'image/*'"
+    ngf-resize-if="$width > 1000 || $height > 800"
+    ngf-resize="{width: 1000, height: 800, quality: .9, centerCrop: false}")
       span.plus-sign +
       .watch-image-description
         span Trois-quarts
@@ -31,7 +48,11 @@ div.watch(ng-repeat="watch in watchArray | orderBy: '-created_at'" ng-class-even
         span Trois-quarts
     .watch-image(ng-if="watch.extra_photos.length > 0 && watch.extra_photos[0] !== ''" ng-repeat="photo in watch.extra_photos")
       img(ng-src="{{photo}}")
-    .watch-blank
+    .watch-blank(ngf-select="uploadImage(watch._id, '/api/watch/add-extra-image/', $file)"
+    ngf-pattern="'image/*'"
+    ngf-accept="'image/*'"
+    ngf-resize-if="$width > 1000 || $height > 800"
+    ngf-resize="{width: 1000, height: 800, quality: .9, centerCrop: false}")
       span.plus-sign +
       .watch-image-description
         span Autre

@@ -375,7 +375,30 @@ angular.module('KronosDashboard').factory('WatchService', function WatchService(
         response = data.data;
         defer.resolve(response);
       });
-      return defer.promise
+      return defer.promise;
+    },
+
+    deleteFrontPhoto: function(id, token) {
+      var response = {};
+      var defer = $q.defer();
+      $http.delete('/api/watch/rem-front-image/' + id,
+      {headers: {'x-access-token': token}}).then(function(data) {
+        response = data.data;
+        defer.resolve(response);
+      });
+      return defer.promise;
+    },
+
+    deleteBackPhoto: function(id, token) {
+
+    },
+
+    deleteQuarterPhoto: function(id, token) {
+
+    },
+
+    deleteExtraPhoto: function(id, photo, token) {
+
     }
   }
 })

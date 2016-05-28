@@ -55,7 +55,7 @@ $scope.uploadImage = function(id, url, file) {
     console.log(err);
   }, function(evt) {
     $scope.progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-    console.log(progressPercentage);
+    console.log($scope.progressPercentage);
   });
 }
 
@@ -68,9 +68,18 @@ $scope.uploadImage = function(id, url, file) {
 $scope.deleteNewsPhoto = function(id, photo) {
   var token = store.get('token');
   NewsService.deleteNewsPhoto(id, photo, token).then(function(data) {
-    console.log("Success.")
+    console.log("Success.");
     console.log(data);
     getAllNews();
+  });
+}
+
+$scope.deleteFrontPhoto = function(id) {
+  var token = store.get('token');
+  WatchService.deleteFrontPhoto(id, token).then(function(data) {
+    console.log("Success.");
+    console.log(data);
+    getWatches();
   });
 }
 

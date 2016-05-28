@@ -459,17 +459,17 @@ router.route('/watch/add-extra-image/:id')
       if(err) {
         return res.status(500).send(err);
       }
-      var front_photo_address = watch.front_photo;
-      watch.front_photo = "";
+      var front_photo_address = path.join(__dirname, "../public" + watch.photo_front);
+      console.log(front_photo_address);
+      watch.photo_front = "";
       console.log("Photo removed.");
       watch.save(function(err, watch) {
         if(err) {
           return res.status(500).send(err);
         }
         console.log("Watch saved.");
-        var photoToDelete = path.join(__dirname, "../public" + photo);
 
-        fs.remove(photoToDelete, function (err) {
+        fs.remove(front_photo_address, function (err) {
           if(err) {
             return res.status(500).send(err);
           }
