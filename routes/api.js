@@ -304,7 +304,7 @@ router.route('/watch/:id')
 // ================================================================================================
 
 // FRONT IMAGE
-router.route('/watch/:id/add-front-image')
+router.route('/watch/add-front-image/:id')
   .post(multipartMiddleware, function(req, res, next) {
     var file = req.files.file; // get file from request
     file.name = file.name.replace(/\s/g, ""); // remove spaces from filename
@@ -350,7 +350,7 @@ router.route('/watch/:id/add-front-image')
   });
 
 // BACK IMAGE
-router.route('/watch/:id/add-back-image')
+router.route('/watch/add-back-image/:id')
   .post(multipartMiddleware, function(req, res, next) {
     var file = req.files.file;
     file.name = file.name.replace(/\s/g, "");
@@ -383,7 +383,7 @@ router.route('/watch/:id/add-back-image')
   });
 
 // 3/4 IMAGE
-router.route('/watch/:id/add-quarter-image')
+router.route('/watch/add-quarter-image/:id')
   .post(multipartMiddleware, function(req, res, next) {
     var file = req.files.file;
     file.name = file.name.replace(/\s/g, "");
@@ -416,7 +416,7 @@ router.route('/watch/:id/add-quarter-image')
   });
 
 // EXTRA IMAGES
-router.route('/watch/:id/add-extra-image')
+router.route('/watch/add-extra-image/:id')
   .post(multipartMiddleware, function(req, res, next) {
     var file = req.files.file;
     file.name = file.name.replace(/\s/g, "");
@@ -536,7 +536,7 @@ router.route('/newspost/:id')
 
 // ================================================================================================
 
-router.route('/newspost/:id/add-image')
+router.route('/newspost/add-image/:id')
   .post(multipartMiddleware, function(req, res, next) {
     var file = req.files.file;
     file.name = file.name.replace(/\s/g, "");
@@ -664,7 +664,7 @@ router.route('/calendarelement/:id')
 
 // ================================================================================================
 
-router.route('/calendarelement/:id/add-image')
+router.route('/calendarelement/add-image/:id')
   .post(multipartMiddleware, function(req, res, next) {
     var file = req.files.file;
     file.name = file.name.replace(/\s/g, "");
@@ -824,7 +824,7 @@ router.route('/pressphoto/:id')
 
 // ================================================================================================
 
-router.route('/pressphoto/:id/add-image')
+router.route('/pressphoto/add-image/:id')
   .post(multipartMiddleware, function(req, res, next) {
     var file = req.files.file;
     file.name = file.name.replace(/\s/g, "");
@@ -932,6 +932,45 @@ router.route('/ambassador/:id')
       }
       res.status(200).send("Ambassador removed.");
     });
-  })
+  });
+
+// ================================================================================================
+
+//                  AMBASSADOR PHOTO API
+
+// ================================================================================================
+
+router.route('/ambassador/add-image/:id')
+  .post(multipartMiddleware, function(req, res, next) {
+    var file = req.files.file;
+    file.name = file.name.replace(/\s/g, "");
+    var uploadDate = new Date().toISOString();
+    uploadDate = uploadDate.replace(/-/g, "");
+    uploadDate = uploadDate.replace(/:/g, "");
+    uploadDate = uploadDate.replace(/\./g, "");
+    uploadDate = uploadDate.replace(/_/g, "");
+    var tempPath = file.path;
+    var targetPath = path.join(__dirname, "../public/images/ambassadors/" + uploadDate + file.name);
+    var savePath = "/images/ambassadors/" + uploadDate + file.name;
+
+    fs.rename(tempPath, targetPath, function(err) {
+      if(err) {
+        return res.status(500).send(err);
+      }
+      Ambassador.findById(req.params.id, function(err, ambassador) {
+        if(err) {
+          return res.status(500).send(err);
+        }
+        ambassador.photo = savePath;
+        ambassador.save(function(err, ambassador) {
+          if(err) {
+            return res.status(500).send(err);
+          }
+          return res.status(200).send(ambassador);
+        });
+      });
+    });
+  });
+
 
 module.exports = router;

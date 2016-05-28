@@ -39,6 +39,26 @@ function DashboardCtrl(
 
 // ==============================================================================
 
+//                        IMAGE UPLOAD FUNCTIONS
+
+// ==============================================================================
+
+$scope.uploadImage = function(id, url, file) {
+  Upload.upload({
+    url: url + id,
+    data: {file: file}
+  }).then(function() {
+    getAllNews();
+  }, function(err) {
+    console.log('Upload failure.');
+    console.log(err);
+  }, function(evt) {
+    $scope.progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+  });
+}
+
+// ==============================================================================
+
 //                        "GET ALL" FUNCTIONS
 
 // ==============================================================================
