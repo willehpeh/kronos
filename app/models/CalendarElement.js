@@ -8,7 +8,8 @@ var calendarElementSchema = new mongoose.Schema({
   month: String,
   year: String,
   place: String,
-  photo: String
+  photo: String,
+  thumbnail: String
 });
 
 module.exports = mongoose.model("CalendarElement", calendarElementSchema);

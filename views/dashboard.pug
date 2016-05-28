@@ -8,6 +8,7 @@ html(ng-app='KronosDashboard')
     script(src="//use.edgefonts.net/quicksand.js")
   body(ng-controller="DashboardCtrl")
     h1 Dashboard
+    button.btn.btn-primary.logout-button(ng-click="logout()") Se déconnecter
     ul.nav.nav-tabs#dashboard-tabs
       li(role="presentation" class="active")
         a(href="#montres") Montres
@@ -58,3 +59,6 @@ html(ng-app='KronosDashboard')
     script(src="/javascripts/controllers/PressModalCtrl.js")
     script(src="/javascripts/controllers/ModifyPressModalCtrl.js")
     script(src="/javascripts/controllers/DeletePressCtrl.js")
+    script(src="/javascripts/controllers/CalendarModalCtrl.js")
+    script(src="/javascripts/controllers/ModifyCalendarModalCtrl.js")
+    script(src="/javascripts/controllers/DeleteCalendarCtrl.js")

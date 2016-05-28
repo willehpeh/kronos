@@ -54,7 +54,7 @@ angular.module('KronosDashboard').factory('CalendarService', function CalendarSe
       var response = {};
       var defer = $q.defer();
 
-      $http.delete('/api/calendarelement' + id, {headers: {'x-access-token' : token}}).then(function(data) {
+      $http.delete('/api/calendarelement/' + id, {headers: {'x-access-token' : token}}).then(function(data) {
         response = data.data;
         defer.resolve(response);
       });

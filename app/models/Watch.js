@@ -22,9 +22,13 @@ var watchSchema = new mongoose.Schema({
   lunette: String,
   poids: String,
   photo_front: String,
+  photo_front_thumbnail: String,
   photo_back: String,
+  photo_back_thumbnail: String,
   photo_quarter: String,
+  photo_quarter_thumbnail: String,
   extra_photos: [String],
+  extra_photos_thumbnails: [String],
   created_at: {type: Date, default: Date.now}
 });
 

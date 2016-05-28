@@ -4,6 +4,7 @@ var newsPostSchema = new mongoose.Schema({
   text: String,
   title: String,
   photos: [String],
+  thumbnails: [String],
   created_at: {type: Date, default: Date.now}
 });
 

@@ -2,9 +2,9 @@ h2 Calendrier
 button.btn.btn-success(ng-click="openCalendarModal()") Nouvel événement
 br
 br
-div.calendarelement(ng-repeat="element in calendarElementArray | orderBy: '-created_at'" ng-class-even="'even'" ng-class-odd="'odd'")
+div.calendarelement(ng-repeat="element in calendarElementArray | orderBy: ['year', 'month', 'day']" ng-class-even="'even'" ng-class-odd="'odd'")
   h3 {{element.title}}
-    small {{element.time}} le {{element.day}} {{element.month}} {{element.year}}
+    small &nbsp;à {{element.time}} le {{element.day}} {{element.month.slice(3)}} {{element.year}}
   span {{element.text}}
   br
   br

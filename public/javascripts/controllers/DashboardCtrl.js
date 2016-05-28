@@ -15,7 +15,7 @@ function DashboardCtrl(
 
 // ==============================================================================
 
-//                        LOGIN FUNCTION
+//                        LOGIN/LOGOUT FUNCTIONS
 
 // ==============================================================================
 
@@ -30,6 +30,11 @@ function DashboardCtrl(
     }, function(data) {
       console.log(data);
     });
+  }
+
+  $scope.logout = function() {
+    store.remove('token');
+    $window.location.href = "/dashboard";
   }
 
 // ==============================================================================
@@ -151,7 +156,7 @@ function DashboardCtrl(
 // ==============================================================================
 
 $scope.openNewsModal = function() {
-// opens modal screen allowing to add new Watch objects
+// opens modal screen allowing to add new News objects
   $uibModal.open({
     animation: true,
     templateUrl: 'partials/_news-modal.html',
@@ -163,7 +168,7 @@ $scope.openNewsModal = function() {
 }
 
 $scope.modifyNewsModal = function(id) {
-// opens modan screen allowing to modify chosen Watch object
+// opens modan screen allowing to modify chosen News object
   $uibModal.open({
     animation: true,
     templateUrl: 'partials/_modify-news-modal.html',
@@ -181,7 +186,7 @@ $scope.modifyNewsModal = function(id) {
 }
 
 $scope.deleteNewsModal = function(id) {
-// opens modal screen allowing to delete chosen Watch object
+// opens modal screen allowing to delete chosen News object
   $uibModal.open({
     animation: true,
     templateUrl: 'partials/_delete-news-modal.html',
@@ -205,7 +210,7 @@ $scope.deleteNewsModal = function(id) {
 // ==============================================================================
 
 $scope.openAmbassadorModal = function() {
-// opens modal screen allowing to add new Watch objects
+// opens modal screen allowing to add new Ambassador objects
   $uibModal.open({
     animation: true,
     templateUrl: 'partials/_ambassador-modal.html',
@@ -217,7 +222,7 @@ $scope.openAmbassadorModal = function() {
 }
 
 $scope.modifyAmbassadorModal = function(id) {
-// opens modan screen allowing to modify chosen Watch object
+// opens modan screen allowing to modify chosen Ambassador object
   $uibModal.open({
     animation: true,
     templateUrl: 'partials/_modify-ambassador-modal.html',
@@ -235,7 +240,7 @@ $scope.modifyAmbassadorModal = function(id) {
 }
 
 $scope.deleteAmbassadorModal = function(id) {
-// opens modal screen allowing to delete chosen Watch object
+// opens modal screen allowing to delete chosen Ambassador object
   $uibModal.open({
     animation: true,
     templateUrl: 'partials/_delete-ambassador-modal.html',
@@ -259,7 +264,7 @@ $scope.deleteAmbassadorModal = function(id) {
 // ==============================================================================
 
 $scope.openPressModal = function() {
-// opens modal screen allowing to add new Watch objects
+// opens modal screen allowing to add new PressPhoto objects
   $uibModal.open({
     animation: true,
     templateUrl: 'partials/_press-modal.html',
@@ -271,7 +276,7 @@ $scope.openPressModal = function() {
 }
 
 $scope.modifyPressModal = function(id) {
-// opens modan screen allowing to modify chosen Watch object
+// opens modan screen allowing to modify chosen PressPhoto object
   $uibModal.open({
     animation: true,
     templateUrl: 'partials/_modify-press-modal.html',
@@ -289,7 +294,7 @@ $scope.modifyPressModal = function(id) {
 }
 
 $scope.deletePressModal = function(id) {
-// opens modal screen allowing to delete chosen Watch object
+// opens modal screen allowing to delete chosen PressPhoto object
   $uibModal.open({
     animation: true,
     templateUrl: 'partials/_delete-press-modal.html',
@@ -303,6 +308,60 @@ $scope.deletePressModal = function(id) {
   }).result.then(function() {
   // renew watch list to show changes
     getAllPressPhotos();
+  });
+}
+
+// ==============================================================================
+
+//                        CALENDAR ELEMENT MODAL FUNCTIONS
+
+// ==============================================================================
+
+$scope.openCalendarModal = function() {
+// opens modal screen allowing to add new CalendarElement objects
+  $uibModal.open({
+    animation: true,
+    templateUrl: 'partials/_calendar-modal.html',
+    controller: CalendarModalCtrl
+  }).result.then(function() {
+  // renew watch list to show changes
+    getAllCalendarElements();
+  });
+}
+
+$scope.modifyCalendarModal = function(id) {
+// opens modan screen allowing to modify chosen CalendarElement object
+  $uibModal.open({
+    animation: true,
+    templateUrl: 'partials/_modify-calendar-modal.html',
+    controller: ModifyCalendarModalCtrl,
+  // sends id to modal
+    resolve: {
+      id: function() {
+        return id;
+      }
+    }
+  }).result.then(function() {
+  // renew watch list to show changes
+    getAllCalendarElements();
+  });
+}
+
+$scope.deleteCalendarModal = function(id) {
+// opens modal screen allowing to delete chosen CalendarElement object
+  $uibModal.open({
+    animation: true,
+    templateUrl: 'partials/_delete-calendar-modal.html',
+    controller: DeleteCalendarCtrl,
+  // sends id to modal
+    resolve: {
+      id: function() {
+        return id;
+      }
+    }
+  }).result.then(function() {
+  // renew watch list to show changes
+    getAllCalendarElements();
   });
 }
 
