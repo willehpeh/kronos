@@ -1,0 +1,19 @@
+<div class="modal-header">
+  <h3 class="modal-title">Modifer photo presse</h3>
+</div>
+<div class="modal-body">
+  <form name="pressPhotoToModifyForm" autocomplete="off">
+    <div class="form-group">
+      <label for="title">Titre</label>
+      <input type="text" id="title" ng-model="pressphotoToModify.title" required autocomplete="off">
+    </div>
+    <div class="form-group">
+      <label for="caption">Texte</label>
+      <textarea class="form-control" ng-model="pressphotoToModify.caption" name="caption" id="caption" rows="5" required autocomplete="off"></textarea>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" id="add-button" ng-disabled="pressPhotoToModifyForm.$invalid" ng-click="saveChanges(pressphotoToModify._id)">Enregistrer modifications</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Annuler</button>
+</div>

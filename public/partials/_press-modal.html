@@ -1,0 +1,19 @@
+<div class="modal-header">
+  <h3 class="modal-title">Nouvelle photo presse</h3>
+</div>
+<div class="modal-body">
+  <form name="newPressPhotoForm" autocomplete="off">
+    <div class="form-group">
+      <label for="title">Titre</label>
+      <input type="text" id="title" ng-model="newPressPhoto.title" required autocomplete="off">
+    </div>
+    <div class="form-group">
+      <label for="caption">Texte</label>
+      <textarea class="form-control" ng-model="newPressPhoto.caption" name="caption" id="caption" rows="5" required autocomplete="off"></textarea>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" id="add-button" ng-disabled="newPressPhotoForm.$invalid" ng-click="addNewPressPhoto()">Ajouter</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Annuler</button>
+</div>

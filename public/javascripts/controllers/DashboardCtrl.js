@@ -254,6 +254,60 @@ $scope.deleteAmbassadorModal = function(id) {
 
 // ==============================================================================
 
+//                        PRESS PHOTO MODAL FUNCTIONS
+
+// ==============================================================================
+
+$scope.openPressModal = function() {
+// opens modal screen allowing to add new Watch objects
+  $uibModal.open({
+    animation: true,
+    templateUrl: 'partials/_press-modal.html',
+    controller: PressModalCtrl
+  }).result.then(function() {
+  // renew watch list to show changes
+    getAllPressPhotos();
+  });
+}
+
+$scope.modifyPressModal = function(id) {
+// opens modan screen allowing to modify chosen Watch object
+  $uibModal.open({
+    animation: true,
+    templateUrl: 'partials/_modify-press-modal.html',
+    controller: ModifyPressModalCtrl,
+  // sends id to modal
+    resolve: {
+      id: function() {
+        return id;
+      }
+    }
+  }).result.then(function() {
+  // renew watch list to show changes
+    getAllPressPhotos();
+  });
+}
+
+$scope.deletePressModal = function(id) {
+// opens modal screen allowing to delete chosen Watch object
+  $uibModal.open({
+    animation: true,
+    templateUrl: 'partials/_delete-press-modal.html',
+    controller: DeletePressCtrl,
+  // sends id to modal
+    resolve: {
+      id: function() {
+        return id;
+      }
+    }
+  }).result.then(function() {
+  // renew watch list to show changes
+    getAllPressPhotos();
+  });
+}
+
+// ==============================================================================
+
 //                        RUN 'GET ALL' FUNCTIONS
 
 // ==============================================================================
