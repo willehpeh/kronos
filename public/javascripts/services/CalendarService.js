@@ -60,6 +60,17 @@ angular.module('KronosDashboard').factory('CalendarService', function CalendarSe
       });
 
       return defer.promise;
+    },
+
+    deleteCalendarPhoto: function(id, token) {
+      var response = {};
+      var defer = $q.defer();
+      $http.delete('/api/calendarelement/rem-image/' + id,
+      {headers: {'x-access-token': token}}).then(function(data) {
+        response = data.data;
+        defer.resolve(response);
+      });
+      return defer.promise;
     }
   }
 });

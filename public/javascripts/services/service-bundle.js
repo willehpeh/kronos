@@ -61,6 +61,17 @@ angular.module('KronosDashboard').factory('AmbassadorService', function Ambassad
       })
 
       return defer.promise;
+    },
+
+    deleteAmbassadorPhoto: function(id, token) {
+      var response = {};
+      var defer = $q.defer();
+      $http.delete('/api/ambassador/rem-image/' + id,
+      {headers: {'x-access-token': token}}).then(function(data) {
+        response = data.data;
+        defer.resolve(response);
+      });
+      return defer.promise;
     }
 
   }
@@ -150,6 +161,17 @@ angular.module('KronosDashboard').factory('CalendarService', function CalendarSe
         defer.resolve(response);
       });
 
+      return defer.promise;
+    },
+
+    deleteCalendarPhoto: function(id, token) {
+      var response = {};
+      var defer = $q.defer();
+      $http.delete('/api/calendarelement/rem-image/' + id,
+      {headers: {'x-access-token': token}}).then(function(data) {
+        response = data.data;
+        defer.resolve(response);
+      });
       return defer.promise;
     }
   }
@@ -304,6 +326,17 @@ angular.module('KronosDashboard').factory('PressPhotoService', function PressPho
         defer.resolve(response);
       });
 
+      return defer.promise;
+    },
+
+    deletePressPhotoPhoto: function(id, token) {
+      var response = {};
+      var defer = $q.defer();
+      $http.delete('/api/pressphoto/rem-image/' + id,
+      {headers: {'x-access-token': token}}).then(function(data) {
+        response = data.data;
+        defer.resolve(response);
+      });
       return defer.promise;
     }
   }

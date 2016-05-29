@@ -110,6 +110,32 @@ $scope.deleteExtraPhoto = function(id, photo) {
   });
 }
 
+$scope.deleteCalendarPhoto = function(id) {
+  var token = store.get('token');
+  CalendarService.deleteCalendarPhoto(id, token).then(function(data) {
+    console.log("Success.");
+    console.log(data);
+    getAllCalendarElements();
+  });
+}
+
+$scope.deletePressPhotoPhoto = function(id) {
+  var token = store.get('token');
+  PressPhotoService.deletePressPhotoPhoto(id, token).then(function(data) {
+    console.log("Success.");
+    console.log(data);
+    getAllPressPhotos();
+  });
+}
+
+$scope.deleteAmbassadorPhoto = function(id) {
+  var token = store.get('token');
+  AmbassadorService.deleteAmbassadorPhoto(id, token).then(function(data) {
+    console.log("Success.");
+    console.log(data);
+    getAllAmbassadors();
+  });
+}
 // ==============================================================================
 
 //                        "GET ALL" FUNCTIONS

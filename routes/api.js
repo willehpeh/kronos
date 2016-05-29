@@ -877,6 +877,37 @@ router.route('/calendarelement/add-image/:id')
     });
   });
 
+  router.route('/calendarelement/rem-image/:id')
+  .delete(tokenMiddleware, function(req, res, next) {
+    if(!req.params.id) {
+      return res.status(400).send({message: "Bad request."});
+    }
+    var id = req.params.id;
+
+    CalendarElement.findById(id, function(err, element) {
+      if(err) {
+        return res.status(500).send(err);
+      }
+      var photo_address = path.join(__dirname, "../public" + element.photo);
+      element.photo = "";
+      console.log("Photo removed.");
+      element.save(function(err, element) {
+        if(err) {
+          return res.status(500).send(err);
+        }
+        console.log("Calendar Element saved.");
+
+        fs.remove(photo_address, function (err) {
+          if(err) {
+            return res.status(500).send(err);
+          }
+          console.log("Photo deleted.");
+          return res.status(200).send({message: "Request complete."});
+        });
+      });
+    });
+  });
+
 // ================================================================================================
 
 //                  USER
@@ -1037,6 +1068,37 @@ router.route('/pressphoto/add-image/:id')
     });
   });
 
+  router.route('/pressphoto/rem-image/:id')
+  .delete(tokenMiddleware, function(req, res, next) {
+    if(!req.params.id) {
+      return res.status(400).send({message: "Bad request."});
+    }
+    var id = req.params.id;
+
+    PressPhoto.findById(id, function(err, pressphoto) {
+      if(err) {
+        return res.status(500).send(err);
+      }
+      var photo_address = path.join(__dirname, "../public" + pressphoto.photo);
+      pressphoto.photo = "";
+      console.log("Photo removed.");
+      pressphoto.save(function(err, pressphoto) {
+        if(err) {
+          return res.status(500).send(err);
+        }
+        console.log("Press Photo saved.");
+
+        fs.remove(photo_address, function (err) {
+          if(err) {
+            return res.status(500).send(err);
+          }
+          console.log("Photo deleted.");
+          return res.status(200).send({message: "Request complete."});
+        });
+      });
+    });
+  });
+
 // ================================================================================================
 
 //                  AMBASSADOR
@@ -1148,6 +1210,37 @@ router.route('/ambassador/add-image/:id')
             return res.status(500).send(err);
           }
           return res.status(200).send(ambassador);
+        });
+      });
+    });
+  });
+
+  router.route('/ambassador/rem-image/:id')
+  .delete(tokenMiddleware, function(req, res, next) {
+    if(!req.params.id) {
+      return res.status(400).send({message: "Bad request."});
+    }
+    var id = req.params.id;
+
+    Ambassador.findById(id, function(err, ambassador) {
+      if(err) {
+        return res.status(500).send(err);
+      }
+      var photo_address = path.join(__dirname, "../public" + ambassador.photo);
+      ambassador.photo = "";
+      console.log("Photo removed.");
+      ambassador.save(function(err, ambassador) {
+        if(err) {
+          return res.status(500).send(err);
+        }
+        console.log("Ambassador saved.");
+
+        fs.remove(photo_address, function (err) {
+          if(err) {
+            return res.status(500).send(err);
+          }
+          console.log("Photo deleted.");
+          return res.status(200).send({message: "Request complete."});
         });
       });
     });

@@ -3,10 +3,21 @@ button.btn.btn-success(ng-click="openAmbassadorModal()") Nouvel ambassadeur
 br
 br
 div.ambassador(ng-repeat="ambassador in ambassadorArray | orderBy: '-created_at'" ng-class-even="'even'" ng-class-odd="'odd'")
+  .ambassador-image(ng-if="ambassador.photo && ambassasdor.photo !==''")
+    img(ng-src="{{ambassador.photo}}")
+    button.btn.btn-danger.btn-sm(ng-click="deleteAmbassadorPhoto(ambassador._id)") Supprimer
   h3 {{ambassador.name}}
   span {{ambassador.description}}
   br
   br
+  button.btn.btn-primary.btn-sm(
+            ngf-select="uploadImage(ambassador._id, '/api/ambassador/add-image/', $file)"
+            ngf-pattern="'image/*'"
+            ngf-accept="'image/*'"
+            ngf-resize-if="$width > 1000 || $height > 800"
+            ngf-resize="{width: 1000, height: 800, quality: .9, centerCrop: false}"
+            ng-if="!ambassador.photo || ambassador.photo===''"
+            ) Ajouter une image
   .edit-buttons
     span.fa.fa-2x.fa-edit(ng-click="modifyAmbassadorModal(ambassador._id)")
     span.fa.fa-2x.fa-close(ng-click="deleteAmbassadorModal(ambassador._id)")

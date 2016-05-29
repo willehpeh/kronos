@@ -60,6 +60,17 @@ angular.module('KronosDashboard').factory('AmbassadorService', function Ambassad
       })
 
       return defer.promise;
+    },
+
+    deleteAmbassadorPhoto: function(id, token) {
+      var response = {};
+      var defer = $q.defer();
+      $http.delete('/api/ambassador/rem-image/' + id,
+      {headers: {'x-access-token': token}}).then(function(data) {
+        response = data.data;
+        defer.resolve(response);
+      });
+      return defer.promise;
     }
 
   }
