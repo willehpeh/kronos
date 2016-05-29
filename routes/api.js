@@ -480,6 +480,112 @@ router.route('/watch/add-extra-image/:id')
     });
   });
 
+  router.route('/watch/rem-back-image/:id')
+  .delete(tokenMiddleware, function(req, res, next) {
+    if(!req.params.id) {
+      return res.status(400).send({message: "Bad request."});
+    }
+    var id = req.params.id;
+
+    Watch.findById(id, function(err, watch) {
+      if(err) {
+        return res.status(500).send(err);
+      }
+      var back_photo_address = path.join(__dirname, "../public" + watch.photo_back);
+      watch.photo_back = "";
+      console.log("Photo removed.");
+      watch.save(function(err, watch) {
+        if(err) {
+          return res.status(500).send(err);
+        }
+        console.log("Watch saved.");
+
+        fs.remove(back_photo_address, function (err) {
+          if(err) {
+            return res.status(500).send(err);
+          }
+          console.log("Photo deleted.");
+          return res.status(200).send({message: "Request complete."});
+        });
+      });
+    });
+  });
+
+  router.route('/watch/rem-quarter-image/:id')
+  .delete(tokenMiddleware, function(req, res, next) {
+    if(!req.params.id) {
+      return res.status(400).send({message: "Bad request."});
+    }
+    var id = req.params.id;
+
+    Watch.findById(id, function(err, watch) {
+      if(err) {
+        return res.status(500).send(err);
+      }
+      var quarter_photo_address = path.join(__dirname, "../public" + watch.photo_quarter);
+      watch.photo_quarter = "";
+      console.log("Photo removed.");
+      watch.save(function(err, watch) {
+        if(err) {
+          return res.status(500).send(err);
+        }
+        console.log("Watch saved.");
+
+        fs.remove(quarter_photo_address, function (err) {
+          if(err) {
+            return res.status(500).send(err);
+          }
+          console.log("Photo deleted.");
+          return res.status(200).send({message: "Request complete."});
+        });
+      });
+    });
+  });
+
+  router.route('/watch/rem-extra-image/:id/:photo')
+  .delete(tokenMiddleware, function(req, res, next) {
+    if(!req.params.id || !req.params.photo) {
+      return res.status(400).send({message: "Bad request."});
+    }
+    var id = req.params.id;
+    var photo = "/images/watches/" + req.params.photo;
+
+    Watch.findById(id, function(err, watch) {
+      if(err) {
+        console.log('Could not find by ID: ' + id);
+        return res.status(500).send(err);
+      }
+
+      var photoPositionInArray = watch.extra_photos.indexOf(photo);
+
+      if(photoPositionInArray >= 0) {
+        console.log("Photo is in position " + photoPositionInArray);
+        watch.extra_photos.splice(photoPositionInArray, 1);
+        console.log("Photo removed from array.");
+        watch.save(function(err, watch) {
+          if(err) {
+            return res.status(500).send(err);
+          }
+          console.log("Watch saved.");
+
+          var photoToDelete = path.join(__dirname, "../public" + photo);
+
+          fs.remove(photoToDelete, function (err) {
+            if(err) {
+              return res.status(500).send(err);
+            }
+            console.log("Photo deleted.");
+            return res.status(200).send({message: "Request complete."});
+          });
+        });
+      }
+      else {
+        return res.status(500).send({message: "Could not find photo in array."});
+      }
+    });
+  });
+
+
 // ================================================================================================
 
 //                  NEWSPOST

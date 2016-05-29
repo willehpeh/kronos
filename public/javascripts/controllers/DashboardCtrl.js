@@ -83,6 +83,33 @@ $scope.deleteFrontPhoto = function(id) {
   });
 }
 
+$scope.deleteBackPhoto = function(id) {
+  var token = store.get('token');
+  WatchService.deleteBackPhoto(id, token).then(function(data) {
+    console.log("Success.");
+    console.log(data);
+    getWatches();
+  });
+}
+
+$scope.deleteQuarterPhoto = function(id) {
+  var token = store.get('token');
+  WatchService.deleteQuarterPhoto(id, token).then(function(data) {
+    console.log("Success.");
+    console.log(data);
+    getWatches();
+  });
+}
+
+$scope.deleteExtraPhoto = function(id, photo) {
+  var token = store.get('token');
+  WatchService.deleteExtraPhoto(id, photo, token).then(function(data) {
+    console.log("Success.");
+    console.log(data);
+    getWatches();
+  });
+}
+
 // ==============================================================================
 
 //                        "GET ALL" FUNCTIONS

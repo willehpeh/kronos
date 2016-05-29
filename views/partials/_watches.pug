@@ -33,6 +33,8 @@ div.watch(ng-repeat="watch in watchArray | orderBy: '-created_at'" ng-class-even
       img(ng-src="{{watch.photo_back}}")
       .watch-image-description
         span Arrière
+      .watch-image-delete
+        span.fa.fa-close(ng-click="deleteBackPhoto(watch._id)")
     .watch-blank(ng-if="watch.photo_quarter === '' || !watch.photo_quarter"
     ngf-select="uploadImage(watch._id, '/api/watch/add-quarter-image/', $file)"
     ngf-pattern="'image/*'"
@@ -46,8 +48,12 @@ div.watch(ng-repeat="watch in watchArray | orderBy: '-created_at'" ng-class-even
       img(ng-src="{{watch.photo_quarter}}")
       .watch-image-description
         span Trois-quarts
+      .watch-image-delete
+        span.fa.fa-close(ng-click="deleteQuarterPhoto(watch._id)")
     .watch-image(ng-if="watch.extra_photos.length > 0 && watch.extra_photos[0] !== ''" ng-repeat="photo in watch.extra_photos")
       img(ng-src="{{photo}}")
+      .watch-image-delete
+        span.fa.fa-close(ng-click="deleteExtraPhoto(watch._id, photo)")
     .watch-blank(ngf-select="uploadImage(watch._id, '/api/watch/add-extra-image/', $file)"
     ngf-pattern="'image/*'"
     ngf-accept="'image/*'"
