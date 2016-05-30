@@ -10,5 +10,8 @@ module.exports = {
    to_address : 'will_alexander@me.com',
 
    admin : 'JPHervet',
-   retailer : 'retailer'
+   retailer : 'retailer',
+
+   mongo_pw : 'gaLtOZt18kQ8',
+   public_dns : 'ec2-54-93-93-136.eu-central-1.compute.amazonaws.com'
 }
