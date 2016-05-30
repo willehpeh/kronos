@@ -7,13 +7,13 @@ html(ng-app='KronosDashboard')
     link(rel="stylesheet" href="/stylesheets/main.min.css")
     script(src="//use.edgefonts.net/quicksand.js")
   body(ng-controller="DashboardCtrl")
-    form
-      label user
+    form.login-form
+      .form-group
+        label Nom d'utilisateur
         input(type='text' ng-model='username')
-      br
-      label password
-        input(type='text' ng-model='password')
-      br
+      .form-group
+        label Mot de passe
+        input(type='password' ng-model='password')
       button(ng-click="login()") Login
 
   script(src="/libs/jquery/dist/jquery.min.js")

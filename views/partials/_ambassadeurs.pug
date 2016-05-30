@@ -2,7 +2,7 @@ h2 Ambassadeurs
 button.btn.btn-success(ng-click="openAmbassadorModal()") Nouvel ambassadeur
 br
 br
-div.ambassador(ng-repeat="ambassador in ambassadorArray | orderBy: '-created_at'" ng-class-even="'even'" ng-class-odd="'odd'")
+.ambassador(ng-repeat="ambassador in ambassadorArray | orderBy: '-created_at'" ng-class-even="'even'" ng-class-odd="'odd'")
   .ambassador-image(ng-if="ambassador.photo && ambassasdor.photo !==''")
     img(ng-src="{{ambassador.photo}}")
     button.btn.btn-danger.btn-sm(ng-click="deleteAmbassadorPhoto(ambassador._id)") Supprimer

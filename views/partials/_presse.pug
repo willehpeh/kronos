@@ -3,10 +3,21 @@ button.btn.btn-success(ng-click="openPressModal()") Nouvelle photo
 br
 br
 div.pressphoto(ng-repeat="pressphoto in pressPhotoArray | orderBy: '-created_at'" ng-class-even="'even'" ng-class-odd="'odd'")
+  .pressphoto-image(ng-if="pressphoto.photo && pressphoto.photo !==''")
+    img(ng-src="{{pressphoto.photo}}")
+    button.btn.btn-danger.btn-sm(ng-click="deletePressPhotoPhoto(pressphoto._id)") Supprimer
   h3 {{pressphoto.title}}
   span {{pressphoto.caption}}
   br
   br
+  button.btn.btn-primary.btn-sm(
+            ngf-select="uploadImage(pressphoto._id, '/api/pressphoto/add-image/', $file)"
+            ngf-pattern="'image/*'"
+            ngf-accept="'image/*'"
+            ngf-resize-if="$width > 1000 || $height > 800"
+            ngf-resize="{width: 1000, height: 800, quality: .9, centerCrop: false}"
+            ng-if="!pressphoto.photo || pressphoto.photo===''"
+            ) Ajouter une image
   .edit-buttons
     span.fa.fa-2x.fa-edit(ng-click="modifyPressModal(pressphoto._id)")
     span.fa.fa-2x.fa-close(ng-click="deletePressModal(pressphoto._id)")
