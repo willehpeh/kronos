@@ -15,11 +15,12 @@ var config = require('./config/config');
 
 // uncomment when db_url defined in config script
 mongoose.connect(config.db_url);
-/*var Watch = require('./app/models/Watch');
+var Watch = require('./app/models/Watch');
 var User = require('./app/models/User');
 var NewsPost = require('./app/models/NewsPost');
 var CalendarElement = require('./app/models/CalendarElement');
-var PressPhoto = require('./app/models/PressPhoto');*/
+var PressPhoto = require('./app/models/PressPhoto');
+var Ambassador = require('./app/models/Ambassador');
 
 // define Mongoose Models here
 
