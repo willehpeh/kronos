@@ -2,12 +2,12 @@ var express = require('express');
 var router = express.Router();
 
 // Load models for MongoDB
-var Watch = require('../app/models/Watch');
-var User = require('../app/models/User');
-var PressPhoto = require('../app/models/PressPhoto');
-var NewsPost = require('../app/models/NewsPost');
-var CalendarElement = require('../app/models/CalendarElement');
-var Ambassador = require('../app/models/Ambassador');
+var Watch = require('../app/models/watch');
+var User = require('../app/models/user');
+var PressPhoto = require('../app/models/pressphoto');
+var NewsPost = require('../app/models/newspost');
+var CalendarElement = require('../app/models/calendarelement');
+var Ambassador = require('../app/models/ambassador');
 
 var path = require('path');
 
