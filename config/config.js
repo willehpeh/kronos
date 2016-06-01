@@ -4,8 +4,8 @@ module.exports = {
 
    secret : '43Rv3T-j34Np41Ll1P3-kR0N03',
 
-   via_address : 'will.the.ginger@gmail.com',
-   via_pw : 'silverfish93',
+   via_address : 'dev.kronos.paris@gmail.com',
+   via_pw : '43Rv3T-j34Np41Ll1P3-kR0N03',
 
    to_address : 'will_alexander@me.com',
 
