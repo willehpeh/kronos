@@ -781,6 +781,8 @@ router.route('/calendarelement')
     calendarelement.month = req.body.element.month;
     calendarelement.year = req.body.element.year;
     calendarelement.place = req.body.element.place;
+    calendarelement.link = req.body.element.link;
+    calendarelement.link_title = req.body.element.link_title;
 
     calendarelement.save(function(err, calendarelement) {
       if(err) {
@@ -817,6 +819,8 @@ router.route('/calendarelement/:id')
       calendarelement.month = req.body.element.month;
       calendarelement.year = req.body.element.year;
       calendarelement.place = req.body.element.place;
+      calendarelement.link = req.body.element.link;
+      calendarelement.link_title = req.body.element.link_title;
 
       calendarelement.save(function(err, calendarelement) {
         if(err) {
