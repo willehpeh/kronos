@@ -200,6 +200,7 @@ router.route('/watch')
     watch.description = req.body.watch.description;
     watch.categorie = req.body.watch.categorie;
     watch.disponible = req.body.watch.disponible;
+    watch.gamme = req.body.watch.gamme;
     watch.prix = req.body.watch.prix;
     watch.taille = req.body.watch.taille;
     watch.mouvement = req.body.watch.mouvement;
@@ -257,6 +258,7 @@ router.route('/watch/:id')
       watch.description = req.body.watch.description;
       watch.categorie = req.body.watch.categorie;
       watch.disponible = req.body.watch.disponible;
+      watch.gamme = req.body.watch.gamme;
       watch.prix = req.body.watch.prix;
       watch.taille = req.body.watch.taille;
       watch.mouvement = req.body.watch.mouvement;
