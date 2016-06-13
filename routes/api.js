@@ -134,6 +134,8 @@ router.route('/contact')
       var serie = req.body.serie;
       if(req.body.interets) {
         var interets = req.body.interets;
+      } else {
+        var interets = "";
       }
       console.log("Variables created.");
       // initiate nodemailer service with info from config file
@@ -158,7 +160,7 @@ router.route('/contact')
             'Ville : ' + ville + '\n' +
             'Modèle : ' + modele + '\n' +
             'Numéro de série : ' + serie + '\n' +
-            'Centres d\'intérêts : ' + JSON.stringify(interets)
+            'Intérêts : ' + JSON.stringify(interets)
       }
 
       console.log("Mail options created.");
