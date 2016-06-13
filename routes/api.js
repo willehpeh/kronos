@@ -144,7 +144,7 @@ router.route('/contact')
               pass: config.via_pw
           }
       });
-
+      console.log("Transporter created.");
       // build e-mail
       var mailOptions = {
       from: address,
@@ -160,6 +160,8 @@ router.route('/contact')
             'Numéro de série : ' + serie + '\n' +
             'Centres d\'intérêts : ' + JSON.stringify(interets)
       }
+
+      console.log("Mail options created.");
 
       // send email with nodemailer
       transporter.sendMail(mailOptions, function(error, info){
