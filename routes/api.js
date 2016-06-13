@@ -135,9 +135,9 @@ router.route('/contact')
       var modele = req.body.modele;
       var serie = req.body.serie;
       if(req.body.interets) {
-        var interets = req.body.interets;
+        var interets = JSON.stringify(req.body.interets);
       } else {
-        var interets = "";
+        var interets = "Non spécifiés.";
       }
       // initiate nodemailer service with info from config file
       var transporter = nodemailer.createTransport({
