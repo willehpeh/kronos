@@ -177,6 +177,83 @@ router.route('/contact')
       });
     });
 
+    router.route('/new-revendeur')
+      .post(function(req, res) {
+
+        // get info from request
+        var societe = req.body.societe;
+        var contact = req.body.contact;
+        var adresseOne = req.body.adresseOne;
+        var adresseTwo = req.body.adresseTwo;
+        var codePostal = req.body.codePostal;
+        var ville = req.body.ville;
+        if(req.body.phone) {
+          var phone = req.body.phone;
+        } else {
+          var phone = "";
+        }
+        if(req.body.mobile) {
+          var mobile = req.body.mobile;
+        } else {
+          var mobile = "";
+        }
+        var email = req.body.email;
+        if(req.body.site) {
+          var site = req.body.site;
+        } else {
+          var site = "";
+        }
+        if(req.body.marques) {
+          var marques = req.body.marques;
+        } else {
+          var marques = "";
+        }
+        if(req.body.commentaires) {
+          var commentaires = req.body.commentaires;
+        } else {
+          var commentaires = "";
+        }
+
+        // initiate nodemailer service with info from config file
+        var transporter = nodemailer.createTransport({
+            service: 'Gmail',
+            auth: {
+                user: config.via_address,
+                pass: config.via_pw
+            }
+        });
+
+        // build e-mail
+        var mailOptions = {
+        from: config.via_address,
+        to: config.to_address,
+        subject: 'Nouvelle demande de revendeur',
+        text: 'Société : ' + societe + '\n' +
+              'Contact : ' + contact + '\n' +
+              'Adresse : ' + adresseOne + '\n' + adresseTwo + '\n' +
+              'Code Postal : ' + codePostal + '\n' +
+              'Ville : ' + ville + '\n' +
+              'Téléphone : ' + phone + '\n' +
+              'Mobile : ' + mobile + '\n' +
+              'E-mail : ' + email + '\n' +
+              'Site : ' + site + '\n' +
+              'Marques représentées : ' + marques + '\n' +
+              'Commentaires : ' + commentaires
+
+        }
+
+        // send email with nodemailer
+        transporter.sendMail(mailOptions, function(error, info){
+          if(error) {
+            console.log(error);
+            res.json({yo: 'error'});
+          } else {
+            console.log('Message sent: ' + info.response);
+            res.json({yo: info.response});
+          };
+        });
+      });
+
 // ================================================================================================
 
 //                  NEWSLETTER
