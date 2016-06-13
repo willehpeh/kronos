@@ -162,7 +162,7 @@ router.route('/contact')
             'Ville : ' + ville + '\n' +
             'Modèle : ' + modele + '\n' +
             'Numéro de série : ' + serie + '\n' +
-            'Intérêts : ' + JSON.stringify(interets)
+            'Intérêts : ' + interets
       }
 
       console.log("Mail options created.");
