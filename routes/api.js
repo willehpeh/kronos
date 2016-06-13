@@ -140,7 +140,9 @@ router.route('/contact')
       } else {
         var interets = "";
       }
-      console.log("Variables created.");
+      console.log("Variables created: ");
+      console.log("Here they are: " + civilite + nom + prenom + adresseOne + adresseTwo +
+                  codePostal + ville + modele + serie + interets);
       // initiate nodemailer service with info from config file
       var transporter = nodemailer.createTransport({
           service: 'Gmail',
