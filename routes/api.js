@@ -184,7 +184,11 @@ router.route('/contact')
         var societe = req.body.societe;
         var contact = req.body.contact;
         var adresseOne = req.body.adresseOne;
-        var adresseTwo = req.body.adresseTwo;
+        if(req.body.adresseTwo) {
+          var adresseTwo = req.body.adresseTwo;
+        } else {
+          var adresseTwo = "";
+        }
         var codePostal = req.body.codePostal;
         var ville = req.body.ville;
         if(req.body.phone) {
