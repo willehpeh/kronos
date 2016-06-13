@@ -120,6 +120,7 @@ router.route('/contact')
   router.route('/garantie')
     .post(function(req, res) {
 
+      console.log(req.body);
       // get info from request
       var civilite = req.body.civilite;
       var nom = req.body.nom;
