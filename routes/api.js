@@ -133,7 +133,9 @@ router.route('/contact')
       var ville = req.body.ville;
       var modele = req.body.modele;
       var serie = req.body.serie;
-      var interets = req.body.interets;
+      if(req.body.interets) {
+        var interets = req.body.interets;
+      }
 
       // initiate nodemailer service with info from config file
       var transporter = nodemailer.createTransport({
