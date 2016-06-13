@@ -127,6 +127,8 @@ router.route('/contact')
       var adresseOne = req.body.adresseOne;
       if(req.body.adresseTwo) {
         var adresseTwo = req.body.adresseTwo;
+      } else {
+        var adresseTwo = "";
       }
       var codePostal = req.body.codePostal;
       var ville = req.body.ville;
