@@ -117,6 +117,60 @@ router.route('/contact')
     });
   });
 
+  router.route('/garantie')
+    .post(function(req, res) {
+
+      // get info from request
+      var civilite = req.body.civilite;
+      var nom = req.body.nom;
+      var prenom = req.body.prenom;
+      var adresseOne = req.body.adresseOne;
+      if(req.body.adresseTwo) {
+        var adresseTwo = req.body.adresseTwo;
+      }
+      var codePostal = req.body.codePostal;
+      var ville = req.body.ville;
+      var modele = req.body.modele;
+      var serie = req.body.serie;
+      var interets = req.body.interets;
+
+      // initiate nodemailer service with info from config file
+      var transporter = nodemailer.createTransport({
+          service: 'Gmail',
+          auth: {
+              user: config.via_address,
+              pass: config.via_pw
+          }
+      });
+
+      // build e-mail
+      var mailOptions = {
+      from: address,
+      to: config.to_address,
+      subject: 'Nouvel enregistrement de garantie',
+      text: 'Civilité : ' + civilite + '\n' +
+            'Nom : ' + nom + '\n' +
+            'Prénom : ' + prenom + '\n' +
+            'Adresse : ' + adresseOne + '\n' + adresseTwo + '\n' +
+            'Code postal : ' + codePostal + '\n' +
+            'Ville : ' + ville + '\n' +
+            'Modèle : ' + modele + '\n' +
+            'Numéro de série : ' + serie + '\n' +
+            'Centres d\'intérêts : ' + JSON.stringify(interets)
+      }
+
+      // send email with nodemailer
+      transporter.sendMail(mailOptions, function(error, info){
+        if(error) {
+          console.log(error);
+          res.json({yo: 'error'});
+        } else {
+          console.log('Message sent: ' + info.response);
+          res.json({yo: info.response});
+        };
+      });
+    });
+
 // ================================================================================================
 
 //                  NEWSLETTER
