@@ -120,7 +120,6 @@ router.route('/contact')
   router.route('/garantie')
     .post(function(req, res) {
 
-      console.log(req.body);
       // get info from request
       var civilite = req.body.civilite;
       var nom = req.body.nom;
@@ -140,9 +139,6 @@ router.route('/contact')
       } else {
         var interets = "";
       }
-      console.log("Variables created: ");
-      console.log("Here they are: " + civilite + nom + prenom + adresseOne + adresseTwo +
-                  codePostal + ville + modele + serie + interets);
       // initiate nodemailer service with info from config file
       var transporter = nodemailer.createTransport({
           service: 'Gmail',
@@ -151,10 +147,9 @@ router.route('/contact')
               pass: config.via_pw
           }
       });
-      console.log("Transporter created.");
       // build e-mail
       var mailOptions = {
-      from: address,
+      from: config.via_address,
       to: config.to_address,
       subject: 'Nouvel enregistrement de garantie',
       text: 'Civilité : ' + civilite + '\n' +
