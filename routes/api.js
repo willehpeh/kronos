@@ -120,7 +120,6 @@ router.route('/contact')
   router.route('/garantie')
     .post(function(req, res) {
 
-      console.log(req.body);
       // get info from request
       var civilite = req.body.civilite;
       var nom = req.body.nom;
@@ -136,7 +135,7 @@ router.route('/contact')
       if(req.body.interets) {
         var interets = req.body.interets;
       }
-
+      console.log("Variables created.");
       // initiate nodemailer service with info from config file
       var transporter = nodemailer.createTransport({
           service: 'Gmail',
