@@ -14,7 +14,10 @@ function DashboardCtrl(
   $uibModal,
   Upload) {
 
-  $scope.range = "";
+  $scope.gamme = {};
+
+  $scope.gamme.name = "";
+
 
 // ==============================================================================
 

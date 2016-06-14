@@ -1,8 +1,34 @@
 h2 Montres
 button.btn.btn-success(ng-click="openWatchModal()") Nouvelle montre
 br
+h3 Filtrer :
+.form-inline
+  .form-group(style="margin-right: 10px")
+    label Toutes
+      input(type="radio" value="" ng-model="gamme.name")
+  .form-group(style="margin-right: 10px")
+    label Diver
+      input(type="radio" value="Diver" ng-model="gamme.name")
+  .form-group(style="margin-right: 10px")
+    label Racer
+      input(type="radio" value="Racer" ng-model="gamme.name")
+  .form-group(style="margin-right: 10px")
+    label Space
+      input(type="radio" value="Space" ng-model="gamme.name")
+  .form-group(style="margin-right: 10px")
+    label Body
+      input(type="radio" value="Body" ng-model="gamme.name")
+  .form-group(style="margin-right: 10px")
+    label Gents
+      input(type="radio" value="Gents" ng-model="gamme.name")
+  .form-group(style="margin-right: 10px")
+    label Meccano
+      input(type="radio" value="Osseos" ng-model="gamme.name")
+  .form-group(style="margin-right: 10px")
+    label Ladys
+      input(type="radio" value="Ladys" ng-model="gamme.name")
 br
-div.watch(ng-repeat="watch in watchArray | orderBy: '-created_at'" ng-class-even="'even'" ng-class-odd="'odd'")
+div.watch(ng-repeat="watch in watchArray | orderBy: '-created_at' | filter: {gamme: gamme.name}" ng-class-even="'even'" ng-class-odd="'odd'")
   h3 {{watch.nom}}
   .watch-images
     .watch-blank(ng-if="watch.photo_front === '' || !watch.photo_front"
