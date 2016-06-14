@@ -28,7 +28,7 @@ h3 Filtrer :
     label Ladys
       input(type="radio" value="Ladys" ng-model="gamme.name")
 br
-div.watch(ng-repeat="watch in watchArray | orderBy: '-created_at' | filter: {gamme: gamme.name}" ng-class-even="'even'" ng-class-odd="'odd'")
+div.watch(ng-repeat="watch in watchArray | orderBy: 'nom' | filter: {gamme: gamme.name}" ng-class-even="'even'" ng-class-odd="'odd'")
   h3 {{watch.nom}}
   .watch-images
     .watch-blank(ng-if="watch.photo_front === '' || !watch.photo_front"

@@ -51,6 +51,7 @@
       <select name="categorie" id="categorie" ng-model="watchToModify.categorie" required autocomplete="off">
         <option value="Homme">Homme</option>
         <option value="Femme">Femme</option>
+        <option value="Special">Special Edition</option>
       </select>
     </div>
     <div class="form-group">
@@ -78,8 +79,23 @@
       </select>
     </div>
     <div class="form-group">
+      <label for="bracelet_size">Taille du bracelet</label>
+      <select name="bracelet_size" id="bracelet_size" ng-model="watchToModify.bracelet_size" required autocomplete="off">
+        <option value="26/24">26/24</option>
+        <option value="24/22">24/22</option>
+        <option value="22/20">22/20</option>
+      </select>
+    </div>
+    <div class="form-group">
       <label for="mouvement">Mouvement</label>
       <input type="text" id="mouvement" ng-model="watchToModify.mouvement" required autocomplete="off">
+    </div>
+    <div class="form-group">
+      <label for="quartz_auto">Quartz ou automatique</label>
+      <select name="quartz_auto" id="quartz_auto" ng-model="newWatch.quartz_auto" required autocomplete="off">
+        <option value="Quartz">Quartz</option>
+        <option value="Automatique">Automatique</option>
+      </select>
     </div>
     <div class="form-group">
       <label for="mouvement_description">Description du mouvement</label>

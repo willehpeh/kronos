@@ -15,6 +15,8 @@ var watchSchema = new mongoose.Schema({
   taille: String,
   mouvement: String,
   mouvement_description: String,
+  quartz_auto: String,
+  bracelet_size: String,
   garantie: String,
   limite: String,
   etancheite: String,

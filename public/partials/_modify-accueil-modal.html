@@ -1,0 +1,15 @@
+<div class="modal-header">
+  <h3 class="modal-title">Modifer nombre d'images</h3>
+</div>
+<div class="modal-body">
+  <form name="accueilToModifyForm" autocomplete="off">
+    <div class="form-group">
+      <label for="name">Nombre d'images</label>
+      <input type="number" id="images" ng-model="accueilToModify.images" required autocomplete="off">
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" id="add-button" ng-disabled="accueilToModifyForm.$invalid" ng-click="saveChanges()">Enregistrer modifications</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Annuler</button>
+</div>

@@ -21,6 +21,7 @@ var NewsPost = require('./app/models/NewsPost');
 var CalendarElement = require('./app/models/CalendarElement');
 var PressPhoto = require('./app/models/PressPhoto');
 var Ambassador = require('./app/models/Ambassador');
+var Accueil = require('./app/models/Accueil')
 
 // define Mongoose Models here
 

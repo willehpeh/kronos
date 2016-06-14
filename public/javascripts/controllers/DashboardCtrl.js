@@ -8,6 +8,7 @@ function DashboardCtrl(
   PressPhotoService,
   CalendarService,
   AmbassadorService,
+  AccueilService,
   store,
   $window,
   $timeout,
@@ -147,6 +148,13 @@ $scope.deleteAmbassadorPhoto = function(id) {
 
 // ==============================================================================
 
+  var getAccueil = function() {
+    AccueilService.getAccueil().then(function(data) {
+      console.log("getAccueil Success!");
+      $scope.accueilArray = data;
+    });
+  }
+
   var getWatches = function() {
   // attributes all watches to watchArray
     WatchService.getWatches().then(function(data) {
@@ -205,6 +213,7 @@ $scope.deleteAmbassadorPhoto = function(id) {
     getAllPressPhotos();
     getAllCalendarElements();
     getAllAmbassadors();
+    getAccueil();
   }
 
 // ==============================================================================
@@ -474,6 +483,25 @@ $scope.deleteCalendarModal = function(id) {
   }).result.then(function() {
   // renew watch list to show changes
     getAllCalendarElements();
+  });
+}
+
+
+$scope.modifyAccueilModal = function(id) {
+// opens modan screen allowing to modify chosen Watch object
+  $uibModal.open({
+    animation: true,
+    templateUrl: 'partials/_modify-accueil-modal.html',
+    controller: ModifyAccueilModalCtrl,
+  // sends id to modal
+    resolve: {
+      id: function() {
+        return id;
+      }
+    }
+  }).result.then(function() {
+  // renew watch list to show changes
+    getAccueil();
   });
 }
 

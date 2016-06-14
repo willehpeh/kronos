@@ -8,6 +8,7 @@ var PressPhoto = require('../app/models/PressPhoto');
 var NewsPost = require('../app/models/NewsPost');
 var CalendarElement = require('../app/models/CalendarElement');
 var Ambassador = require('../app/models/Ambassador');
+var Accueil = require('../app/models/Accueil')
 
 var path = require('path');
 
@@ -345,6 +346,8 @@ router.route('/watch')
     watch.gamme = req.body.watch.gamme;
     watch.prix = req.body.watch.prix;
     watch.taille = req.body.watch.taille;
+    watch.quartz_auto = req.body.watch.quartz_auto;
+    watch.bracelet_size = req.body.watch.bracelet_size;
     watch.mouvement = req.body.watch.mouvement;
     watch.mouvement_description = req.body.watch.mouvement_description;
     watch.garantie = req.body.watch.garantie;
@@ -405,6 +408,8 @@ router.route('/watch/:id')
       watch.gamme = req.body.watch.gamme;
       watch.prix = req.body.watch.prix;
       watch.taille = req.body.watch.taille;
+      watch.quartz_auto = req.body.watch.quartz_auto;
+      watch.bracelet_size = req.body.watch.bracelet_size;
       watch.mouvement = req.body.watch.mouvement;
       watch.mouvement_description = req.body.watch.mouvement_description;
       watch.garantie = req.body.watch.garantie;
@@ -1397,5 +1402,31 @@ router.route('/ambassador/add-image/:id')
     });
   });
 
+router.route('/accueil')
+  .get(function(req, res) {
+    Accueil.find(function(err, data) {
+      if(err) {
+        res.status(500).send(err);
+      }
+      res.send(data);
+    });
+  });
+router.route('/accueil/:id')
+  .put(function(req, res) {
+    Accueil.findById(req.params.id, function(err, accueil) {
+      if(err) {
+        res.status(500).send(err);
+      }
+
+      accueil.images = req.body.images;
+
+      accueil.save(function(err, accueil) {
+        if(err) {
+          return res.status(500).send(err);
+        }
+        return res.send(accueil);
+      });
+    })
+  })
 
 module.exports = router;
