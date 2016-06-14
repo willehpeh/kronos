@@ -14,6 +14,7 @@ var watchSchema = new mongoose.Schema({
   prix: String,
   taille: String,
   mouvement: String,
+  mouvement_description: String,
   garantie: String,
   limite: String,
   etancheite: String,

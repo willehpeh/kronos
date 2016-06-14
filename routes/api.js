@@ -346,6 +346,7 @@ router.route('/watch')
     watch.prix = req.body.watch.prix;
     watch.taille = req.body.watch.taille;
     watch.mouvement = req.body.watch.mouvement;
+    watch.mouvement_description = req.body.watch.mouvement_description;
     watch.garantie = req.body.watch.garantie;
     watch.limite = req.body.watch.limite;
     watch.etancheite = req.body.watch.etancheite;
@@ -405,6 +406,7 @@ router.route('/watch/:id')
       watch.prix = req.body.watch.prix;
       watch.taille = req.body.watch.taille;
       watch.mouvement = req.body.watch.mouvement;
+      watch.mouvement_description = req.body.watch.mouvement_description;
       watch.garantie = req.body.watch.garantie;
       watch.limite = req.body.watch.limite;
       watch.etancheite = req.body.watch.etancheite;
