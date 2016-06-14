@@ -11,6 +11,10 @@
       </select>
     </div>
     <div class="form-group">
+      <label for="show">La montre s'affiche sur le site</label>
+      <input id="show" type="checkbox" ng-model="watchToModify.show" ng-checked="watchToModify.show">
+    </div>
+    <div class="form-group">
       <label for="nom">Nom</label>
       <input id="nom" type="text" ng-model="watchToModify.nom" required autocomplete="off">
     </div>

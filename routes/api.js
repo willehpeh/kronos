@@ -333,6 +333,7 @@ router.route('/watch')
     var watch = new Watch();
 
     // grab info from request, apply to new Watch()
+    watch.show = req.body.watch.show;
     watch.marque = req.body.watch.marque;
     watch.nom = req.body.watch.nom;
     watch.quantite = req.body.watch.quantite;
@@ -391,6 +392,7 @@ router.route('/watch/:id')
       }
 
       // grab info from request and apply to Watch found by MongoDB
+      watch.show = req.body.watch.show;
       watch.marque = req.body.watch.marque;
       watch.nom = req.body.watch.nom;
       watch.quantite = req.body.watch.quantite;

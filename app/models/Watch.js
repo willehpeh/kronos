@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 
 var watchSchema = new mongoose.Schema({
+  show: Boolean,
   marque: String,
   nom: String,
   quantite: Number,

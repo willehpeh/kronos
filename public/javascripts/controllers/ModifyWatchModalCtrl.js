@@ -23,6 +23,7 @@ function ModifyWatchModalCtrl(
   $scope.saveChanges = function(id) {
     var id = id;
     var watch = $scope.watchToModify;
+    console.log(JSON.stringify($scope.watchToModify))
     var token = store.get('token');
 
     $('#add-button').text('');
