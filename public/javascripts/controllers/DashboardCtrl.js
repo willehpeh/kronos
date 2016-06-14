@@ -14,6 +14,8 @@ function DashboardCtrl(
   $uibModal,
   Upload) {
 
+  $scope.range = "";
+
 // ==============================================================================
 
 //                        LOGIN/LOGOUT FUNCTIONS
