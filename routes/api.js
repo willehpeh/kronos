@@ -259,6 +259,80 @@ router.route('/contact')
         });
       });
 
+router.route('/commande')
+  .post(function(req, res) {
+
+    // get info from request
+    var nom = req.body.nom;
+    var prenom = req.body.prenom;
+    var adresseOne = req.body.adresseOne;
+    if(req.body.adresseTwo) {
+      var adresseTwo = req.body.adresseTwo;
+    } else {
+      var adresseTwo = "";
+    }
+    var codePostal = req.body.codePostal;
+    var ville = req.body.ville;
+    if(req.body.phone) {
+      var phone = req.body.phone;
+    } else {
+      var phone = "";
+    }
+    if(req.body.mobile) {
+      var mobile = req.body.mobile;
+    } else {
+      var mobile = "";
+    }
+    var email = req.body.email;
+    var modele = req.body.modele;
+    var strapRubber = req.body.strapRubber;
+    var strapLeather = req.body.strapLeather;
+    if(req.body.comments) {
+      var comments = req.body.comments;
+    } else {
+      var comments = "";
+    }
+
+    // initiate nodemailer service with info from config file
+    var transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+            user: config.via_address,
+            pass: config.via_pw
+        }
+    });
+
+    // build e-mail
+    var mailOptions = {
+    from: email,
+    to: config.to_address,
+    subject: 'NOUVELLE COMMANDE',
+    text: 'Nom : ' + nom + '\n' +
+          'Prenom : ' + prenom + '\n' +
+          'Adresse : ' + adresseOne + '\n' + adresseTwo + '\n' +
+          'Code Postal : ' + codePostal + '\n' +
+          'Ville : ' + ville + '\n' +
+          'Téléphone fixe : ' + phone + '\n' +
+          'Téléphone mobile : ' + mobile + '\n' +
+          'Email : ' + email + '\n' + '\n' +
+          'Modèlé souhaité : ' + modele + '\n' +
+          'Strap caoutchouc : ' + strapRubber + '\n' +
+          'Strap cuir : ' + strapLeather + '\n' +
+          'Message : ' + comments + '\n'
+    }
+
+    // send email with nodemailer
+    transporter.sendMail(mailOptions, function(error, info){
+      if(error) {
+        console.log(error);
+        res.json({yo: 'error'});
+      } else {
+        console.log('Message sent: ' + info.response);
+        res.json({yo: info.response});
+      };
+    });
+  });
+
 // ================================================================================================
 
 //                  NEWSLETTER
