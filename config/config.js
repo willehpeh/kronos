@@ -7,7 +7,7 @@ module.exports = {
    via_address : 'dev.kronos.paris@gmail.com',
    via_pw : '43Rv3T-j34Np41Ll1P3-kR0N03',
 
-   to_address : 'will_alexander@me.com',
+   to_address : 'jprv@kronos.paris',
 
    admin : 'JPHervet',
    retailer : 'retailer',
