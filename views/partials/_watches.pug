@@ -35,8 +35,8 @@ div.watch(ng-repeat="watch in watchArray | orderBy: 'nom' | filter: {gamme: gamm
     ngf-select="uploadImage(watch._id, '/api/watch/add-front-image/', $file)"
     ngf-pattern="'image/*'"
     ngf-accept="'image/*'"
-    ngf-resize-if="$width > 1000 || $height > 800"
-    ngf-resize="{width: 1000, height: 800, quality: .9, centerCrop: false}")
+    ngf-resize-if="$width > 1400 || $height > 1000"
+    ngf-resize="{width: 1400, height: 1000, quality: 1, centerCrop: false}")
       span.plus-sign +
       .watch-image-description
         span Avant
