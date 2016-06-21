@@ -287,6 +287,11 @@ router.route('/commande')
     var modele = req.body.modele;
     var strapRubber = req.body.strapRubber;
     var strapLeather = req.body.strapLeather;
+    if(req.body.origine) {
+      var origine = req.body.origine;
+    } else {
+      var origine = "";
+    }
     if(req.body.comments) {
       var comments = req.body.comments;
     } else {
@@ -318,6 +323,7 @@ router.route('/commande')
           'Modèlé souhaité : ' + modele + '\n' +
           'Strap caoutchouc : ' + strapRubber + '\n' +
           'Strap cuir : ' + strapLeather + '\n' +
+          'Ils nous connaissent de : ' + origine + '\n' +
           'Message : ' + comments + '\n'
     }
 
